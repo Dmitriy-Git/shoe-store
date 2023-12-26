@@ -29,7 +29,11 @@ class ProductController {
     }
 
     getAll(req, res, next) {
-        return Product.findAll()
+        const { limit = 9, page = 1 } = req.query
+
+        let offset = page * limit - limit
+
+        return Product.findAndCountAll({ limit, offset })
                 .then((data) => res.json(data))
                 .catch(next)
     }
