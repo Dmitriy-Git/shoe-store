@@ -1,17 +1,20 @@
 <script setup>
 // import { ref, onMounted } from 'vue'
 import useProductList from '../hooks/useProductList'
+import Card from './Card.vue'
 
-const { data } = useProductList()
+const { rows } = useProductList()
 
 </script>
 
 <template>
-  <ul>
-    <li v-if="data" v-for="item in data.rows">
-      {{ item.name }}
-    </li>
-  </ul>
+    <a-list grid="{ gutter: 16, column: 3 }" :data-source="rows">
+      <template #renderItem="{ item }">
+        <a-list-item>
+          <Card :="item" />
+        </a-list-item>
+      </template>
+    </a-list>
 </template>
 
 <style scoped>

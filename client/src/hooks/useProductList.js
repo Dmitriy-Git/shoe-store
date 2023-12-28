@@ -1,24 +1,21 @@
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { getProductList } from '../api'
 
 export default function useProductList() {
     const data = ref(null)
 
-    const fetchData = () => 
-        fetch('http://localhost:3000/api/product?page=1&offset=9')
-        .then((res) => res.json())
-
     const getData = async () => {
         try {
-            data.value = await fetchData()
+            data.value = await getProductList()
         } catch(e) {
             console.log(e)
         }
     }
 
     onMounted(getData)
+
+    const rows = computed(() => data.value?.rows || [])
+    const count = computed(() => data.value?.count || 0)
       
-      
-    return {
-        data
-    }
+    return { count, rows }
 }
