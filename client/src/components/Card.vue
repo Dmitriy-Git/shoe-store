@@ -20,7 +20,7 @@
 </script>
 
 <template>
-    <a-card hoverable style="width: 240px" @click="onClick">
+    <a-card hoverable style="width: 240px;" @click="onClick">
         <template #cover>
             <img :src="`${SERVER_PATH}${props.img}`" />
         </template>
