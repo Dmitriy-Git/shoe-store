@@ -28,7 +28,7 @@ class ProductController {
         }
     }
 
-    getAll(req, res, next) {
+    async getAll(req, res, next) {
         const { limit = 9, page = 1, brands, rangePrice } = req.query
 
         const rangeList = rangePrice?.split(',')
@@ -47,14 +47,22 @@ class ProductController {
         if(rangeList) {
             const [min, max] = rangeList
 
+            if (Number(max) < Number(min)) {
+                return next('неверно задан диапазон')
+            }
+
             whereOptions.price = {
                 [Op.between]: [min, max]
             }
         }
 
-        return Product.findAndCountAll({ limit, offset, where: whereOptions })
-                .then((data) => res.json(data))
-                .catch(next)
+        try {
+            const data = await Product.findAndCountAll({ limit, offset, where: whereOptions })
+
+            return res.json(data) 
+        } catch(error) {
+            next(error)
+        }      
     }
 
     async getOne(req, res, next) {
