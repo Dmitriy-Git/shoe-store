@@ -1,6 +1,17 @@
+import axios from 'axios'
+
 
 export const SERVER_PATH = 'http://localhost:3000/'
 
-export const getProductList = () => 
-        fetch(`${SERVER_PATH}api/product?page=2&offset=10`)
-        .then((res) => res.json())
+export const getProductList = (params = {}) => {
+        const { page = 1, rangePrice, brands, limit = 9 } = params
+
+        return axios.get(`${SERVER_PATH}api/product`, {
+           params: { 
+                page, 
+                limit,
+                rangePrice: rangePrice || undefined, 
+                brands: brands || undefined, 
+           }     
+        })
+}

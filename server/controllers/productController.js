@@ -29,11 +29,30 @@ class ProductController {
     }
 
     getAll(req, res, next) {
-        const { limit = 9, page = 1 } = req.query
+        const { limit = 9, page = 1, brands, rangePrice } = req.query
+
+        const rangeList = rangePrice?.split(',')
+        const brandList = brands?.split(',')
 
         let offset = page * limit - limit
 
-        return Product.findAndCountAll({ limit, offset })
+        const whereOptions = {}
+
+        if(brandList) {
+            whereOptions.brandId = {
+                [Op.or]: brandList 
+            }
+        }
+
+        if(rangeList) {
+            const [min, max] = rangeList
+
+            whereOptions.price = {
+                [Op.between]: [min, max]
+            }
+        }
+
+        return Product.findAndCountAll({ limit, offset, where: whereOptions })
                 .then((data) => res.json(data))
                 .catch(next)
     }

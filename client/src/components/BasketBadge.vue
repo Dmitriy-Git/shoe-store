@@ -3,7 +3,7 @@
     import { ref } from 'vue'
     import BasketSVG from '../assets/basket.svg'
 
-    const count = ref(7)
+    const count = ref(0)
 </script>
 <template>
     <div style="display: flex; align-items: center;">

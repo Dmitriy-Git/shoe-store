@@ -3,7 +3,7 @@
     import { useRouter } from 'vue-router'
     import { SERVER_PATH } from '../api'
 
-    const props = defineProps({
+    const { id, name, price, img } = defineProps({
         id: Number,
         name: String,
         price: Number,
@@ -13,19 +13,19 @@
     const router = useRouter()
 
     const onClick = () => {
-        router.push(`/product/${props.id}/popup`)
+        router.push(`/product/${id}/popup`)
     }
 
 
 </script>
 
 <template>
-    <a-card hoverable style="width: 240px;" @click="onClick">
+    <a-card hoverable style="width: 250px;" @click="onClick">
         <template #cover>
-            <img :src="`${SERVER_PATH}${props.img}`" />
+            <img :src="`${SERVER_PATH}${img}`" />
         </template>
-        <a-card-meta :title="props.name">
-            <template #description> {{ props.price }} </template>
+        <a-card-meta :title="name">
+            <template #description> {{ price }} </template>
         </a-card-meta>
     </a-card>
 </template>

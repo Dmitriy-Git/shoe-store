@@ -8,6 +8,18 @@
       components: {
         Menu: {
           colorPrimary: '#',
+        },
+        Slider: {
+          colorPrimary: '#444B58',
+          colorPrimaryBorder: '#444B58',
+          colorPrimaryBorderHover: '#444B58',
+        },
+        InputNumber: {
+          colorPrimaryHover: '#444B58',
+        },
+        Checkbox: {
+          colorPrimary: '#444B58',
+          colorPrimaryHover: '#444B58',
         }
       },
     }"
