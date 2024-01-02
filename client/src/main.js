@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Antd from 'ant-design-vue';
 import App from './App.vue'
 import routes from './routes'
+import store  from './store'
 import 'ant-design-vue/dist/reset.css';
 
 const router = createRouter({
@@ -13,6 +14,7 @@ const router = createRouter({
 const app = createApp(App)  
 
 app.use(router)
+app.use(store)
 app.use(Antd)
 
 app.mount('#app')

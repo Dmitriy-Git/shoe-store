@@ -1,5 +1,5 @@
 import Main from './pages/Main.vue'
-import ProductDetail from './pages/ProductDetail.vue'
+import ProductDetailPopup from './components/ProductDetailPopup.vue'
 
 export default [
     {   
@@ -8,7 +8,7 @@ export default [
         children: [
             {
                 path: '/product/:id/popup', 
-                component: ProductDetail
+                component: ProductDetailPopup
             }
         ] 
     },

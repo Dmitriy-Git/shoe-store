@@ -15,3 +15,7 @@ export const getProductList = (params = {}) => {
            }     
         })
 }
+
+export const getProductDetail = (id) => {
+        return axios.get(`${SERVER_PATH}api/product/${id}`)    
+}

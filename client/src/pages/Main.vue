@@ -5,6 +5,7 @@
 <template>
     <div class="container">
         <ProductList />
+        <router-view />
     </div>
 </template>
 

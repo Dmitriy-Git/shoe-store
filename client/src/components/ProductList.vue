@@ -36,7 +36,7 @@
         Показать еще
     </a-button>
   </div>
-</div>
+  </div>
 </template>
 
 <style scoped>

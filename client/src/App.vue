@@ -20,6 +20,10 @@
         Checkbox: {
           colorPrimary: '#444B58',
           colorPrimaryHover: '#444B58',
+        },
+        Radio: {
+          colorPrimary: '#444B58',
+          colorPrimaryHover: '#444B58',
         }
       },
     }"

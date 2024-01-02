@@ -1,9 +1,16 @@
 
 <script setup>
-    import { ref } from 'vue'
+    import { computed } from 'vue'
+    import { useStore } from 'vuex'
     import BasketSVG from '../assets/basket.svg'
+  
+    const store = useStore()
 
-    const count = ref(0)
+    const cartCount = computed(() => store.getters[`basket/cartCount`])
+    const cartProducts = computed(() => store.getters[`basket/cartProducts`])
+
+    // console.log(cartCount.value)
+    // console.log(cartProducts.value)
 </script>
 <template>
     <div style="display: flex; align-items: center;">

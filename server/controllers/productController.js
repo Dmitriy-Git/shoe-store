@@ -90,7 +90,7 @@ class ProductController {
                     where: { id: { [Op.or]: sizeIds } }
                 })
 
-                return res.json({ product, sizes: sizes.map((i) => i.size) })
+                return res.json({...product.toJSON(), sizes: sizes.map((i) => i.size) })
             }
 
             return res.json(product)
