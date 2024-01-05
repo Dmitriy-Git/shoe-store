@@ -1,8 +1,11 @@
-import { ref, onMounted, computed, watch, reactive } from 'vue'
+import { ref, onMounted, watch, reactive } from 'vue'
 import { getProductList } from '../api'
 
 export default function useProductList() {
-    const dataSource = ref(null)
+    const dataSource = reactive({
+        count: 0,
+        rows: [],
+    })
     const loading = ref(false)
     const page = ref(1)
     const filters = reactive({
@@ -16,13 +19,12 @@ export default function useProductList() {
         try {
             const { data: result } = await getProductList(params)
 
-            if(dataSource.value && params?.page > 1) {
-                dataSource.value = {
-                    rows: [...dataSource.value.rows, ...result.rows],
-                    count: result.count
-                }
+            if(dataSource && params?.page > 1) {
+                dataSource.count = result.count
+                dataSource.rows = [...dataSource.rows, ...result.rows]
             } else {
-                dataSource.value = result
+                dataSource.count = result.count
+                dataSource.rows = result.rows
             }
 
         } catch(e) {
@@ -33,9 +35,6 @@ export default function useProductList() {
     }
 
     onMounted(getData)
-
-    const rows = computed(() => dataSource.value?.rows || [])
-    const count = computed(() => dataSource.value?.count || 0)
 
     watch(page, (newValue) => {
         const params = { page: newValue, brands: filters.brands, rangePrice: filters.rangePrice }
@@ -63,5 +62,5 @@ export default function useProductList() {
         filters.rangePrice = rangePrice
     }
       
-    return { count, rows, loading, loadMore, applyFilters }
+    return { dataSource, loading, loadMore, applyFilters }
 }

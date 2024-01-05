@@ -27,7 +27,6 @@
         },
         {
             key: '/basket',
-            // label: 'Корзина',
             title: 'Корзина',
             label : h(BasketBadge),
         },

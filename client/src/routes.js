@@ -1,4 +1,5 @@
 import Main from './pages/Main.vue'
+import CartPage from './pages/CartPage.vue'
 import ProductDetailPopup from './components/ProductDetailPopup.vue'
 
 export default [
@@ -12,5 +13,9 @@ export default [
             }
         ] 
     },
+    {
+        path: '/basket',
+        component: CartPage,
+    }
 ]
 

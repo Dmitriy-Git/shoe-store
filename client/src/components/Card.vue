@@ -12,7 +12,7 @@
 
     const router = useRouter()
 
-    const onClick = () => {
+    const onClick = (id) => {
         router.push(`/product/${id}/popup`)
     }
 
@@ -20,7 +20,7 @@
 </script>
 
 <template>
-    <a-card hoverable style="width: 250px;" @click="onClick">
+    <a-card hoverable style="width: 250px;" @click="onClick(id)">
         <template #cover>
             <img :src="`${SERVER_PATH}${img}`" />
         </template>

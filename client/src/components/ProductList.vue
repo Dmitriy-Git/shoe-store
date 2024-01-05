@@ -3,7 +3,7 @@
   import Card from './Card.vue'
   import ProductFilters from './ProductFilters.vue'
 
-  const { rows, loadMore, count, loading, applyFilters } = useProductList()
+  const { loadMore, dataSource, loading, applyFilters } = useProductList()
 </script>
 
 <template>
@@ -12,7 +12,7 @@
   <div class="product-list_container">
     <a-list 
       grid="{ gutter: 6, column: 3 }" 
-      :data-source="rows" 
+      :data-source="dataSource.rows" 
       :loading="loading" 
       style="min-width: 100%;"
     >
@@ -23,13 +23,13 @@
       </template>
     </a-list>
     <div 
-      v-if="rows.length && count === rows.length" 
+      v-if="dataSource.rows.length && dataSource.count === dataSource.rows.length" 
       class="product-list_all_container"
     > 
       Вы посмотрели весь список
     </div>
     <a-button 
-      v-if="count !== rows.length" 
+      v-if="dataSource.count !== dataSource.rows.length" 
       type="primary" 
       class="product-list_button_container" 
       @click="loadMore">

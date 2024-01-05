@@ -19,3 +19,31 @@ export const getProductList = (params = {}) => {
 export const getProductDetail = (id) => {
         return axios.get(`${SERVER_PATH}api/product/${id}`)    
 }
+
+export const addProductToCart = (params) => {
+        const { userId, productId } = params
+
+        return axios.post(`${SERVER_PATH}api/basket`, {
+                userId, 
+                productId,
+        })
+}
+
+export const getCart = (userId) => {
+        return axios.get(`${SERVER_PATH}api/basket`, {
+                params: {
+                        userId: userId || 1
+                }
+        })
+}
+
+export const deleteProductToCart = (params) => {
+        const { userId, productId } = params
+
+        return axios.delete(`${SERVER_PATH}api/basket`, {
+                data: {
+                        userId,
+                        productId,
+                }
+        })      
+}

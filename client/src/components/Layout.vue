@@ -25,7 +25,6 @@
             <router-view />
         </a-layout-content>
         <a-layout-footer class="footer">
-            footer
         </a-layout-footer>
     </a-layout>
 </template>
@@ -35,7 +34,8 @@
         position: relative;
         background-color: #484283;
         border-bottom: 1px solid #FFFFFF;
-        min-height: 340px;
+        min-height: 45vh;
+        max-height: 45vh;
         padding-inline: 0;
         padding: 0 100px;
     }
@@ -73,8 +73,10 @@
 
     .content {
         background-color: #FFFFFF;
+        min-height: 45vh;
     }
     .footer {
         background-color: #444B58;
+        min-height: 10vh;
     }
 </style>

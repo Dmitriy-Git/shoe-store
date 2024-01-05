@@ -1,28 +1,59 @@
-const { Basket } = require('../models')
+const { Op } = require("sequelize");
+const { Basket, Product } = require('../models')
 
 class BasketController {
-    create(req, res, next) {
+    async create(req, res, next) {
         const { userId, productId } = req.body
+        
+        try {
+            await Basket.create({ userId, productId })
 
-        return Basket.create({ userId, productId })
-                .then((data) => res.json(data))
-                .catch(next)
+            const data = await Basket.findAll({ where: { userId } })
+
+            const productIds = data.map((i) => i.productId)
+
+            const products = await Product.findAll({ where: { id: { [Op.in]: productIds } } } )
+
+            return res.json({ productIds, products })
+        } catch(e) {
+            next(e)
+        }
     }
 
-    delete(req, res, next) {
+    async delete(req, res, next) {
         const { userId, productId } = req.body
 
-        return Basket.destroy({ where: { userId, productId } })
-                .then((data) => res.json(data))
-                .catch(next)
+        try {
+            await Basket.destroy({ where: { userId, productId } })
+
+            const data = await Basket.findAll({ where: { userId } })
+
+            const productIds = data.map((i) => i.productId)
+
+            const products = await Product.findAll({ where: { id: { [Op.in]: productIds } } } )
+
+            return res.json({ productIds, products })
+        } catch(e) {
+            next(e)
+        }
     }
 
-    getAll(req, res, next) {
+    async getAll(req, res, next) {
         const { userId } = req.query
 
-        return Basket.findAll({ where: { userId } })
-                .then((data) => res.json(data))
-                .catch(next)
+        if(!userId) next('userId - обязательный параметр')
+
+        try {
+            const data = await Basket.findAll({ where: { userId } })
+
+            const productIds = data.map((i) => i.productId)
+
+            const products = await Product.findAll({ where: { id: { [Op.in]: productIds } } } )
+
+            return res.json({ productIds, products })
+        } catch (e) {
+            next(e)
+        }
     }
 }
 

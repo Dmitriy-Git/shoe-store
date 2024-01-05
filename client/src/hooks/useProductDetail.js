@@ -1,9 +1,11 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import { getProductDetail } from '../api'
 
 export default function useProductDetail() {
     const route = useRoute()
+    const store = useStore()
 
     const dataSource = ref(null)
     const sizeGroup = ref('')
@@ -22,5 +24,9 @@ export default function useProductDetail() {
         getData(route.params.id)
     })
 
-    return { dataSource, sizeGroup }
+    const addProductToCart = () => {
+        store.dispatch('basket/addProduct', { userId: 1, productId: Number(route.params.id) })
+    }
+
+    return { dataSource, sizeGroup, addProductToCart }
 }

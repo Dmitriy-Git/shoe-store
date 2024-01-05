@@ -6,9 +6,14 @@
 
     const router = useRouter()
 
-    const { dataSource, sizeGroup } = useProductDetail()
+    const { dataSource, sizeGroup, addProductToCart } = useProductDetail()
 
     const cancel = () => router.go(-1)
+
+    const submit = () => {
+        addProductToCart()
+        cancel()
+    }
     
 </script>
 
@@ -34,7 +39,7 @@
                 </div>
 
                 <p class="product-detail_price_title">{{ dataSource?.price }}</p>
-                <a-button type="primary" class="basket_button">
+                <a-button type="primary" class="basket_button" @click="submit">
                     Добавить в корзину
                 </a-button>
             </div>

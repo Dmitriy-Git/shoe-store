@@ -13,7 +13,7 @@
     .container {
         display: flex;
         margin: 50px auto;
-        width: 70%;
+        width: 75%;
     }
 
     @media (min-width: 1100px) and (max-width: 1270px) {
