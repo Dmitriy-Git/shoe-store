@@ -11,13 +11,12 @@
     <ProductFilters :applyFilters="applyFilters" />
   <div class="product-list_container">
     <a-list 
-      grid="{ gutter: 6, column: 3 }" 
+      :grid="{ gutter: 6, column: 3 }" 
       :data-source="dataSource.rows" 
       :loading="loading" 
-      style="min-width: 100%;"
     >
       <template #renderItem="{ item }">
-        <a-list-item>
+        <a-list-item :key="item.id">
           <Card :="item" />
         </a-list-item>
       </template>

@@ -13,18 +13,18 @@
     .container {
         display: flex;
         margin: 50px auto;
-        width: 75%;
-    }
+        width: 70%;
+    }     
 
     @media (min-width: 1100px) and (max-width: 1270px) {
         .container {
-            width: 85%;
+            width: 80%;
         }
     }
 
     @media (min-width: 1000px) and (max-width: 1099px) {
         .container {
-            width: 90%;
+            width: 85%;
         }
-    }        
+    }  
 </style>

@@ -25,7 +25,7 @@
                 </template>
             </a-list>
         </div>
-        <a-from name="checkout" style="width: 50%; margin-top: 20px;">
+        <a-from name="checkout" style="width: 40%; margin-top: 20px;">
             <a-form-item name="username">
                 <a-input placeholder="имя"/>
             </a-form-item>

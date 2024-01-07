@@ -25,6 +25,7 @@
             <router-view />
         </a-layout-content>
         <a-layout-footer class="footer">
+           <h1 class="logo">SneakMax</h1>
         </a-layout-footer>
     </a-layout>
 </template>
@@ -78,5 +79,6 @@
     .footer {
         background-color: #444B58;
         min-height: 10vh;
+        padding-left: 100px;
     }
 </style>
