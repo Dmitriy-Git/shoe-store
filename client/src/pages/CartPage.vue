@@ -20,7 +20,7 @@
             <a-list :data-source="cartProducts" style="min-width: 100%;">
                 <template #renderItem="{ item }">
                     <a-list-item @click.stop>
-                        <CartItem :count="item.count" :result="item.result" />
+                        <CartItem :count="item.count" :product="item.product" :sizes="item.sizes" />
                     </a-list-item>
                 </template>
             </a-list>
@@ -60,7 +60,7 @@
         border-radius: 6px;
         padding: 10px;
         min-width: 600px;
-        max-height: 500px;
+        max-height: 600px;
         overflow-y: scroll;
     }
 

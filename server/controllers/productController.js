@@ -84,13 +84,13 @@ class ProductController {
             })
 
             if (product.productSizes?.length) {
-               const sizeIds = product.productSizes.map((i) => i.sizeId)  
+                const sizeIds = product.productSizes.map((i) => i.sizeId)  
 
-               const sizes = await Size.findAll({
+                const sizes = await Size.findAll({
                     where: { id: { [Op.or]: sizeIds } }
                 })
 
-                return res.json({...product.toJSON(), sizes: sizes.map((i) => i.size) })
+                return res.json({ ...product.toJSON(), sizes: sizes.map((i) => ({ id: i.id, size: i.size })) })
             }
 
             return res.json(product)

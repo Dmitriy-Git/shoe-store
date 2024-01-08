@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { getProductDetail } from '../api'
@@ -25,8 +25,12 @@ export default function useProductDetail() {
     })
 
     const addProductToCart = () => {
-        store.dispatch('basket/addProduct', { userId: 1, productId: Number(route.params.id) })
+        store.dispatch('basket/addProduct', { userId: 1, productId: Number(route.params.id), size: sizeGroup.value })
     }
 
-    return { dataSource, sizeGroup, addProductToCart }
+    const sizeOptions = computed(() => {
+        return dataSource.value?.sizes?.map((i) => ({ label: i.size, value: i.id })) || []
+    })
+
+    return { dataSource, sizeGroup, sizeOptions, addProductToCart }
 }

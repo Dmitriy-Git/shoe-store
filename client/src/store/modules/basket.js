@@ -7,29 +7,18 @@ const state = () => ({
 
 const getters = {
     cartProducts: (state) => {
-        const result = {}
-
-        state.productCart.productIds.forEach((el) => {
-            if(result[el]) result[el] = { count: result[el].count + 1 }
-            else result[el] = { count: 1 }
-        })
-
-        state.productCart.products.forEach((el) => {
-            result[el.id].result = el
-        })
-
-        return Object.values(result) || []
+        return state.productCart
     },
     cartCount: (state) => {
         if (state.productCart) {    
-            return state.productCart.productIds.length 
+            return state.productCart.reduce((acc, el) => acc + el.count, 0)
         }
 
         return 0
     },
     totalPrice: (state) => {
         if (state.productCart)
-            return state.productCart.products.reduce((acc, el) => acc + el.price, 0)
+            return state.productCart.reduce((acc, el) => acc + el.product.price * el.sizes.length, 0)
 
         return 0    
     }

@@ -1,20 +1,14 @@
 const { Op } = require("sequelize");
-const { Basket, Product } = require('../models')
+const { Basket, Product, } = require('../models')
 
 class BasketController {
     async create(req, res, next) {
-        const { userId, productId } = req.body
+        const { userId, productId, size } = req.body
         
         try {
-            await Basket.create({ userId, productId })
+            await Basket.create({ userId, productId, size })
 
-            const data = await Basket.findAll({ where: { userId } })
-
-            const productIds = data.map((i) => i.productId)
-
-            const products = await Product.findAll({ where: { id: { [Op.in]: productIds } } } )
-
-            return res.json({ productIds, products })
+            return getResponse(res, userId)
         } catch(e) {
             next(e)
         }
@@ -26,13 +20,7 @@ class BasketController {
         try {
             await Basket.destroy({ where: { userId, productId } })
 
-            const data = await Basket.findAll({ where: { userId } })
-
-            const productIds = data.map((i) => i.productId)
-
-            const products = await Product.findAll({ where: { id: { [Op.in]: productIds } } } )
-
-            return res.json({ productIds, products })
+            return getResponse(res, userId)
         } catch(e) {
             next(e)
         }
@@ -44,17 +32,42 @@ class BasketController {
         if(!userId) next('userId - обязательный параметр')
 
         try {
-            const data = await Basket.findAll({ where: { userId } })
-
-            const productIds = data.map((i) => i.productId)
-
-            const products = await Product.findAll({ where: { id: { [Op.in]: productIds } } } )
-
-            return res.json({ productIds, products })
+            return getResponse(res, userId)
         } catch (e) {
             next(e)
         }
     }
+}
+
+async function getResponse(res, userId) {
+    const data = await Basket.findAll({ where: { userId } })
+
+    const productIds = data.map((i) => i.productId)
+    const products = await Product.findAll({ where: { id: { [Op.in]: productIds } } } )
+
+    const response = preparedResponse(data, products)
+
+    return res.json(response)
+}
+
+function preparedResponse(data, products) {
+    const result = {}
+
+    data.forEach((i) => {
+        const { productId, size } = i
+
+        if(result[productId]) {
+            result[productId] = { count: result[productId].count + 1, sizes: [...result[productId].sizes, size] }
+        } else {
+            result[productId] = { count: 1, sizes: [size] }
+        }
+    })
+
+    products.forEach((product) => {
+        result[product.id].product = product.toJSON()
+    })
+
+    return Object.values(result)
 }
 
 module.exports = new BasketController()

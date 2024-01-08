@@ -2,9 +2,9 @@ const { Size } = require("../models")
 
 class SizeController {
     create(req, res, next) {
-        const { size } = req.body
+        const { size, id } = req.body
 
-        return Size.create({ size })
+        return Size.create({ size, id })
                 .then((data) => res.json(data))
                 .catch(next)
     }

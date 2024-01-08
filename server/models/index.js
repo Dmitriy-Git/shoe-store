@@ -11,6 +11,7 @@ const Basket = sequelize.define('basket', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     userId: { type: DataTypes.INTEGER, allowNull: false, },
     productId: { type: DataTypes.INTEGER, allowNull: false, },
+    size: { type: DataTypes.INTEGER, allowNull: false, }
 })
 
 const Product = sequelize.define('product', {
@@ -27,7 +28,7 @@ const Brand = sequelize.define('brand', {
 })
 
 const Size = sequelize.define('size', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    id: {type: DataTypes.INTEGER, allowNull: false,  primaryKey: true, unique: true },
     size: { type: DataTypes.INTEGER, allowNull: false, unique: true }
 })
 

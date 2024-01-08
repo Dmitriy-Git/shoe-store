@@ -21,9 +21,10 @@ export const getProductDetail = (id) => {
 }
 
 export const addProductToCart = (params) => {
-        const { userId, productId } = params
+        const { userId, productId, size } = params
 
         return axios.post(`${SERVER_PATH}api/basket`, {
+                size,
                 userId, 
                 productId,
         })

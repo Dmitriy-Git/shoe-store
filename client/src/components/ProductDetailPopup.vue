@@ -6,7 +6,7 @@
 
     const router = useRouter()
 
-    const { dataSource, sizeGroup, addProductToCart } = useProductDetail()
+    const { dataSource, sizeGroup, sizeOptions, addProductToCart } = useProductDetail()
 
     const cancel = () => router.go(-1)
 
@@ -35,11 +35,11 @@
 
                 <div class="product-detail_size_container">
                     <p class="product-detail_size_container__title">Выберите размер</p>
-                    <a-radio-group v-model:value="sizeGroup"  option-type="button" :options="dataSource?.sizes" />
+                    <a-radio-group v-model:value="sizeGroup"  option-type="button" :options="sizeOptions" />
                 </div>
 
                 <p class="product-detail_price_title">{{ dataSource?.price }}</p>
-                <a-button type="primary" class="basket_button" @click="submit">
+                <a-button type="primary" class="basket_button" @click="submit" :disabled="!sizeGroup">
                     Добавить в корзину
                 </a-button>
             </div>
