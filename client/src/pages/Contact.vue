@@ -39,6 +39,23 @@
             <h2>Контакты</h2>
             <p>+7 800 789 89 89</p>
             <p>Большая Семёновская улица, 17А</p>
+            <div class="form_container">
+                <h2 style="color: #FFFFFF;">Есть вопросы?</h2>
+                <p style="color: #FFFFFF;"> Заполните форму и наш <br /> менеджер свяжется с вами </p>
+                <a-form name="about" class="form_content">
+                    <a-form-item name="username" :rules="[{ required: true, message: 'Пожалуйста, введите имя' }]">           
+                        <a-input placeholder="Имя" />
+                    </a-form-item>
+                    <a-form-item name="phone" :rules="[{ required: true, message: 'Пожалуйста, введите номер телефона' }]">           
+                        <a-input placeholder="Номер телефона" />
+                    </a-form-item>
+                    <a-form-item>
+                        <a-button type="primary" html-type="submit" class="button_container">
+                            Подписаться 
+                        </a-button>
+                    </a-form-item>
+                </a-form>
+            </div>
         </div>
         <yandex-map :settings="setting" width="70%" height="500px">
             <yandex-map-default-scheme-layer/>
@@ -55,12 +72,35 @@
 </template>
 
 <style scoped>
-
     .container {
         display: flex;
         justify-content: space-between;
         width: 80%;
         padding: 0 100px;
         margin: 20px auto;
+    }
+
+    .form_container {
+        background-color: #484283;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 50px 0 50px;
+        border-radius: 4px;
+    }
+
+    .form_content {
+        width: 200px; 
+        display: flex; 
+        flex-direction: column;
+    }
+
+    .button_container {
+        background-color: #F14F4F;
+        width: 200px;
+    }
+
+    .button_container:hover {
+        background-color: #F14F4F;
+        opacity: 0.6;
     }
 </style>

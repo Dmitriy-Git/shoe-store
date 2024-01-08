@@ -1,13 +1,16 @@
 
 <script setup>
-    import { computed, onMounted } from 'vue'
+    import { computed, onMounted, watch, ref } from 'vue'
     import { useStore } from 'vuex'
-    import { useRouter } from 'vue-router'
+    import { useRouter, useRoute } from 'vue-router'
     import BasketSVG from '../assets/basket.svg'
     import CartItem from './CartItem.vue'
   
     const store = useStore()
     const router = useRouter()
+    const route = useRoute()
+
+    const visible = ref(false);
 
     const cartCount = computed(() => store.getters[`basket/cartCount`])
     const totalPrice = computed(() => store.getters['basket/totalPrice'])
@@ -16,9 +19,22 @@
     onMounted(() => {
         store.dispatch('basket/getAllProducts')
     })
+
+    watch(
+        () => route.path, 
+        () => {
+            visible.value = route.path === '/basket'
+        }
+    )
 </script>
 <template>
-        <a-dropdown>
+        <div v-if="visible" style="display: flex; align-items: center;" @click.prevent>
+            <span class="title">Корзина</span>
+            <a-badge :count="cartCount">
+                <BasketSVG />
+            </a-badge>
+        </div>
+        <a-dropdown v-if="!visible">
             <div style="display: flex; align-items: center;" @click.prevent>
                 <span class="title">Корзина</span>
                 <a-badge :count="cartCount">
