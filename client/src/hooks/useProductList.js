@@ -1,17 +1,16 @@
 import { ref, onMounted, watch, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { getProductList } from '../api'
 
-export default function useProductList() {
+export default function useProductList(filters) {
     const dataSource = reactive({
         count: 0,
         rows: [],
     })
     const loading = ref(false)
     const page = ref(1)
-    const filters = reactive({
-        rangePrice: null,
-        brands: null,
-    })
+
+    const router = useRouter()
 
     const getData = async (params) => {
         loading.value = true
@@ -34,18 +33,20 @@ export default function useProductList() {
         }
     }
 
-    onMounted(getData)
+    onMounted(() => {
+        getData()
+    })
 
     watch(page, (newValue) => {
-        const params = { page: newValue, brands: filters.brands, rangePrice: filters.rangePrice }
+        const params = { page: newValue, ...filters }
 
         getData(params)
     })
 
     watch(filters, (newValue) => {
-        const { brands, rangePrice } = newValue
+        const { brands, rangePrice, sortByPrice } = newValue
 
-        const params = { page: 1, brands, rangePrice }
+        const params = { page: 1, brands, rangePrice, sortByPrice }
         page.value = 1
 
         getData(params)
@@ -55,12 +56,9 @@ export default function useProductList() {
         page.value +=1        
     }
 
-    const applyFilters = (value) => {
-        const { brands, rangePrice } = value
-
-        filters.brands = brands
-        filters.rangePrice = rangePrice
+    const onClickByCard = (id) => {
+        router.push(`/product/${id}/popup`)
     }
       
-    return { dataSource, loading, loadMore, applyFilters }
+    return { dataSource, loading, loadMore, onClickByCard }
 }

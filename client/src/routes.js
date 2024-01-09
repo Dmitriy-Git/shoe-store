@@ -1,5 +1,5 @@
 import Main from './pages/Main.vue'
-import CartPage from './pages/CartPage.vue'
+import Cart from './pages/Cart.vue'
 import About from './pages/About.vue'
 import Contact from './pages/Contact.vue' 
 import ProductDetailPopup from './components/ProductDetailPopup.vue'
@@ -16,8 +16,8 @@ export default [
         ] 
     },
     {
-        path: '/basket',
-        component: CartPage,
+        path: '/cart',
+        component: Cart,
     },
     {
         path: '/about',

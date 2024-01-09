@@ -2,13 +2,12 @@
 <script setup>
     import { computed } from 'vue'
     import { useStore } from 'vuex'
-    import CartItem from '../components/CartItem.vue'
+    import CartList from '../components/CartList.vue'
 
     const store = useStore()
 
-    const cartCount = computed(() => store.getters[`basket/cartCount`])
-    const totalPrice = computed(() => store.getters['basket/totalPrice'])
-    const cartProducts = computed(() => store.getters[`basket/cartProducts`])
+    const cartCount = computed(() => store.getters[`cart/cartCount`])
+    const totalPrice = computed(() => store.getters['cart/totalPrice'])
 </script>
 
 <template>
@@ -17,13 +16,7 @@
         <h3>Товаров в заказе: {{ cartCount }}</h3>
         <h3>Общая стоимасть заказа: {{ totalPrice }}</h3>
         <div class="list_container">
-            <a-list :data-source="cartProducts" style="min-width: 100%;">
-                <template #renderItem="{ item }">
-                    <a-list-item @click.stop>
-                        <CartItem :count="item.count" :product="item.product" :sizes="item.sizes" />
-                    </a-list-item>
-                </template>
-            </a-list>
+            <CartList />
         </div>
         <a-from name="checkout" style="width: 40%; margin-top: 20px;">
             <a-form-item name="username">

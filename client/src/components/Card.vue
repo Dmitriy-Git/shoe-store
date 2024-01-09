@@ -1,6 +1,5 @@
 
 <script setup>
-    import { useRouter } from 'vue-router'
     import { SERVER_PATH } from '../api'
 
     const { id, name, price, img } = defineProps({
@@ -9,18 +8,10 @@
         price: Number,
         img: String,
     })
-
-    const router = useRouter()
-
-    const onClick = (id) => {
-        router.push(`/product/${id}/popup`)
-    }
-
-
 </script>
 
 <template>
-    <a-card hoverable style="width: 250px;" @click="onClick(id)">
+    <a-card hoverable style="width: 250px;" @click="$emit('onClick', id)">
         <template #cover>
             <img :src="`${SERVER_PATH}${img}`" />
         </template>

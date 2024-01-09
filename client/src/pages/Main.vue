@@ -1,10 +1,18 @@
 <script setup>
     import ProductList from '../components/ProductList.vue'
+    import ProductFilters from '../components/ProductFilters.vue'
+
+    import useProductFilters from '../hooks/useProductFilters'
+
+    const { filters, applyFilters } = useProductFilters()
 </script>
 
 <template>
     <div class="container">
-        <ProductList />
+        <div class="content">
+            <ProductFilters @submit="applyFilters" />
+            <ProductList :filters="filters" />
+        </div>
         <router-view />
     </div>
 </template>
@@ -27,4 +35,10 @@
             width: 85%;
         }
     }  
+
+    .content {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
 </style>

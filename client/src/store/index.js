@@ -1,8 +1,8 @@
 import { createStore } from 'vuex'
-import basket from './modules/basket'
+import cart from './modules/cart'
 
 export default createStore({
     modules: {
-      basket
+      cart
     }
   })

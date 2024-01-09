@@ -4,7 +4,7 @@
     import { useStore } from 'vuex'
     import { useRouter, useRoute } from 'vue-router'
     import BasketSVG from '../assets/basket.svg'
-    import CartItem from './CartItem.vue'
+    import CartList from './CartList.vue'
   
     const store = useStore()
     const router = useRouter()
@@ -12,18 +12,17 @@
 
     const visible = ref(false);
 
-    const cartCount = computed(() => store.getters[`basket/cartCount`])
-    const totalPrice = computed(() => store.getters['basket/totalPrice'])
-    const cartProducts = computed(() => store.getters[`basket/cartProducts`])
+    const cartCount = computed(() => store.getters[`cart/cartCount`])
+    const totalPrice = computed(() => store.getters['cart/totalPrice'])
 
     onMounted(() => {
-        store.dispatch('basket/getAllProducts')
+        store.dispatch('cart/getAllProducts')
     })
 
     watch(
         () => route.path, 
         () => {
-            visible.value = route.path === '/basket'
+            visible.value = route.path === '/cart'
         }
     )
 </script>
@@ -34,7 +33,7 @@
                 <BasketSVG />
             </a-badge>
         </div>
-        <a-dropdown v-if="!visible">
+        <a-dropdown v-else>
             <div style="display: flex; align-items: center;" @click.prevent>
                 <span class="title">Корзина</span>
                 <a-badge :count="cartCount">
@@ -44,17 +43,11 @@
             <template #overlay>
                 <div class="dropdown_container">
                     <div class="list_container">
-                        <a-list :data-source="cartProducts" style="min-width: 100%;">
-                            <template #renderItem="{ item }">
-                                <a-list-item @click.stop>
-                                    <CartItem :count="item.count" :product="item.product" :sizes="item.sizes" />
-                                </a-list-item>
-                            </template>
-                        </a-list>
+                        <CartList />
                     </div>
                     <div class="dropdown_footer">
                         <h3>Итого: {{ totalPrice }}</h3>
-                        <a-button type="primary" class="button_container" @click="router.push('/basket')">
+                        <a-button type="primary" class="button_container" @click="router.push('/cart')">
                             Перейти в корзину
                         </a-button>
                     </div>

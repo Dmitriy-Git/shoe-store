@@ -25,7 +25,7 @@ export default function useProductDetail() {
     })
 
     const addProductToCart = () => {
-        store.dispatch('basket/addProduct', { userId: 1, productId: Number(route.params.id), size: sizeGroup.value })
+        store.dispatch('cart/addProduct', { userId: 1, productId: Number(route.params.id), size: sizeGroup.value })
     }
 
     const sizeOptions = computed(() => {

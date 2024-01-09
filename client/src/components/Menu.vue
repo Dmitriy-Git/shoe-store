@@ -2,7 +2,7 @@
 <script setup>
     import { ref, watch, h } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
-    import BasketBadge from './BasketBadge.vue'
+    import CartBadge from './CartBadge.vue'
 
     const router = useRouter()
     const route = useRoute()
@@ -26,9 +26,9 @@
             title: 'Контакты',
         },
         {
-            key: '/basket',
+            key: '/cart',
             title: 'Корзина',
-            label : h(BasketBadge),
+            label : h(CartBadge),
         },
     ])
 

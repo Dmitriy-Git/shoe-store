@@ -13,7 +13,7 @@
     const store = useStore()
 
     const deleteProduct = (productId) => {
-        store.dispatch('basket/deleteProduct', { userId: 1, productId })
+        store.dispatch('cart/deleteProduct', { userId: 1, productId })
     }
 </script>
 

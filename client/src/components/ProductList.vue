@@ -1,23 +1,28 @@
 <script setup>
-  import useProductList from '../hooks/useProductList'
-  import Card from './Card.vue'
-  import ProductFilters from './ProductFilters.vue'
+    import useGridColumns from '../hooks/useGridColumns'
+    import useProductList from '../hooks/useProductList'
 
-  const { loadMore, dataSource, loading, applyFilters } = useProductList()
+    import Card from './Card.vue'
+
+    const { filters } = defineProps({
+        filters: Object,
+    })
+
+    const { columns } = useGridColumns()
+    const { loadMore, dataSource, loading, onClickByCard } = useProductList(filters)
+  
 </script>
 
 <template>
-  <div class="catalog-container">
-    <ProductFilters :applyFilters="applyFilters" />
   <div class="product-list_container">
     <a-list 
-      :grid="{ gutter: 6, column: 3 }" 
+      :grid="{ gutter: 6, column: columns }" 
       :data-source="dataSource.rows" 
       :loading="loading" 
     >
       <template #renderItem="{ item }">
         <a-list-item :key="item.id">
-          <Card :="item" />
+          <Card :="item" @on-click="onClickByCard" />
         </a-list-item>
       </template>
     </a-list>
@@ -35,16 +40,9 @@
         Показать еще
     </a-button>
   </div>
-  </div>
 </template>
 
 <style scoped>
-  .catalog-container {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-  }
-
   .product-list_container {
     display: flex;
     flex-direction: column;

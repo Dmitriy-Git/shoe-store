@@ -1,10 +1,9 @@
 
 <script setup>
-    import { ref, defineProps } from 'vue'
+    import { ref } from 'vue'
+    import { UpOutlined, DownOutlined  } from '@ant-design/icons-vue';
 
-    const { applyFilters } = defineProps({
-        applyFilters: Function
-    })
+    const emit = defineEmits(['submit'])
 
     const brandsOptions = [
         {label: 'Adidas', value: 1}, 
@@ -16,27 +15,35 @@
     const minPrice = ref(0);
     const maxPrice = ref(40000);
     const brands = ref([])
+    const sortByPrice = ref('asc')
 
     const submit = () => {
         const result = {
             rangePrice: [minPrice.value, maxPrice.value].join(','),
-            brands: Object.values(brands.value).join(',')
+            brands: Object.values(brands.value).join(','),
+            sortByPrice: sortByPrice.value,
         }
 
-        applyFilters(result)
+        emit('submit', result)
     }
 
     const reset = () => {
         minPrice.value = 0
         maxPrice.value = 40000
         brands.value = []
+        sortByPrice.value = 'asc'
 
         const result = {
             rangePrice: undefined,
-            brands: undefined
+            brands: undefined,
+            sortByPrice: undefined,
         }
 
-        applyFilters(result)
+        emit('submit', result)
+    }
+
+    const setOrder = () => {
+        sortByPrice.value = sortByPrice.value === 'asc' ? 'desc' : 'asc'
     }
 
 </script>
@@ -65,9 +72,19 @@
                     </a-col>
                 </a-row>
             </div>
-            <div>
+            <div style="margin-bottom: 20px;">
                 <a-checkbox-group v-model:value="brands" :options="brandsOptions" />
-            </div>     
+            </div> 
+            <div>
+                <div v-if="sortByPrice === 'asc'" class="order-container" @click="setOrder">
+                    <UpOutlined />
+                    <span style="margin-left: 10px;">По возрастанию</span>
+                </div>
+                <div v-else class="order-container" @click="setOrder">
+                    <DownOutlined />
+                    <span style="margin-left: 10px;">По убыванию</span>
+                </div>
+            </div>    
         </div>
         <div class="product-list-filter_button_group">
             <a-button type="primary" class="product-list-filter_button" @click="submit">
@@ -110,5 +127,11 @@
     .product-list-filter_button_group {
         display: flex;
         flex-direction: column;
+    }
+
+    .order-container {
+        display: flex; 
+        align-items: center; 
+        cursor: pointer;
     }
 </style>
