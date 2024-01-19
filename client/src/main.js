@@ -1,16 +1,10 @@
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
 import Antd from 'ant-design-vue';
 import App from './App.vue'
-import routes from './routes'
+import router from './routes'
 import store  from './store'
 import 'ant-design-vue/dist/reset.css';
 import { createYmaps } from 'vue-yandex-maps';
-
-const router = createRouter({
-    routes,
-    history: createWebHistory(),
-  })
 
 const app = createApp(App) 
 

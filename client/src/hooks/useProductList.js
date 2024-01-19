@@ -44,9 +44,9 @@ export default function useProductList(filters) {
     })
 
     watch(filters, (newValue) => {
-        const { brands, rangePrice, sortByPrice } = newValue
+        const { brands, rangePrice, sortByPrice, sizes } = newValue
 
-        const params = { page: 1, brands, rangePrice, sortByPrice }
+        const params = { page: 1, brands, rangePrice, sortByPrice, sizes }
         page.value = 1
 
         getData(params)

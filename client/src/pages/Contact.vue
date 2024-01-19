@@ -1,12 +1,12 @@
 <script setup>
-    import { 
+   import { 
         YandexMap, 
         YandexMapMarker, 
         YandexMapDefaultFeaturesLayer, 
         YandexMapDefaultSchemeLayer,
         YandexMapControls,
         YandexMapZoomControl,
-        YandexMapListener 
+        YandexMapListener
     } from 'vue-yandex-maps';
     import Marker from '../assets/marker.svg'
 
@@ -30,12 +30,12 @@
         boxSizing: 'border-box',
         transform: 'translate(-50%, calc(-50% - 24px))',
         cursor: 'pointer',
-  };
+    };
 </script>
 
 <template>
     <div class="container">
-        <div>
+        <div style="margin-right: 20px;">
             <h2>Контакты</h2>
             <p>+7 800 789 89 89</p>
             <p>Большая Семёновская улица, 17А</p>
@@ -57,7 +57,7 @@
                 </a-form>
             </div>
         </div>
-        <yandex-map :settings="setting" width="70%" height="500px">
+        <yandex-map :settings="setting" width="60%" height="500px">
             <yandex-map-default-scheme-layer/>
             <yandex-map-default-features-layer/>
             <yandex-map-marker :settings="settingMarkers">
@@ -74,17 +74,20 @@
 <style scoped>
     .container {
         display: flex;
-        justify-content: space-between;
-        width: 80%;
+        justify-content: center;
+        width: 100%;
         padding: 0 100px;
-        margin: 20px auto;
+        position: absolute;  
+        top: 50%;
+        left: 50%; 
+        transform: translate(-50%, -50%);
     }
 
     .form_container {
         background-color: #484283;
         display: flex;
         flex-direction: column;
-        padding: 20px 50px 0 50px;
+        padding: 20px 30px 0 30px;
         border-radius: 4px;
     }
 

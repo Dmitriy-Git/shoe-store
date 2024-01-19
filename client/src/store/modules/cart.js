@@ -10,15 +10,11 @@ const getters = {
         return state.productCart
     },
     cartCount: (state) => {
-        if (state.productCart) {    
-            return state.productCart.reduce((acc, el) => acc + el.count, 0)
-        }
-
-        return 0
+        return state.productCart?.length || 0
     },
     totalPrice: (state) => {
         if (state.productCart)
-            return state.productCart.reduce((acc, el) => acc + el.product.price * el.sizes.length, 0)
+            return state.productCart.reduce((acc, el) => acc + el.price, 0)
 
         return 0    
     }

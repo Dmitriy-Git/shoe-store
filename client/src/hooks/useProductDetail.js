@@ -10,6 +10,8 @@ export default function useProductDetail() {
     const dataSource = ref(null)
     const sizeGroup = ref('')
 
+    const userId = computed(() => store.getters['auth/getUserId'])
+
     const getData = async (id) => {
         try {
             const { data } = await getProductDetail(id)
@@ -25,7 +27,7 @@ export default function useProductDetail() {
     })
 
     const addProductToCart = () => {
-        store.dispatch('cart/addProduct', { userId: 1, productId: Number(route.params.id), size: sizeGroup.value })
+        store.dispatch('cart/addProduct', { userId: userId.value, productId: Number(route.params.id), size: sizeGroup.value })
     }
 
     const sizeOptions = computed(() => {

@@ -24,13 +24,13 @@ class UserController {
 
         const token = generateJwt(user.id, user.email)
 
-        return res.json({ token })
+        return res.json({ token, user: { username: user.email, id: user.id } })
     }
 
     async login(req, res, next) {
         const { email, password } = req.body
 
-        const user = await User.findOne({where: { email }})
+        const user = await User.findOne({ where: { email } })
 
         if (!user) return next('Пользователь не найден')
     
@@ -39,13 +39,33 @@ class UserController {
     
         const token = generateJwt(user.id, user.email)
         
-        return res.json({token})
+        return res.json({token,  user: { username: user.email, id: user.id, password: user.password } })
     }
 
-    check(req, res, next) {
+    async update(req, res, next) {
+        const { email, password, id } = req.body
+
+        if(!id || !email || !password ) next('Указаны не все параметры')
+
+        try {
+            await User.update({ id, email, password }, { where: { id } })
+
+            const user = await User.findOne({ where: { id } })
+
+            const token = generateJwt(user.id, user.email)
+
+            return res.json({ token,  user: { username: user.email, id: user.id, password: user.password } })
+        } catch(e) {
+            next(e)
+        }
+    }
+
+    async check(req, res, next) {
         const token = generateJwt(req.user.id, req.user.email)
 
-        return res.json({ token })
+        const user = await User.findOne({ where: { id: req.user.id } })
+
+        return res.json({ token, user: { username: user.email, id: user.id, password: user.password } })
     }
 }
 

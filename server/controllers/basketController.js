@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Basket, Product, } = require('../models')
+const { Basket, Product, Brand } = require('../models')
 
 class BasketController {
     async create(req, res, next) {
@@ -15,10 +15,10 @@ class BasketController {
     }
 
     async delete(req, res, next) {
-        const { userId, productId } = req.body
+        const { userId, id } = req.body
 
         try {
-            await Basket.destroy({ where: { userId, productId } })
+            await Basket.destroy({ where: { userId, id } })
 
             return getResponse(res, userId)
         } catch(e) {
@@ -40,34 +40,25 @@ class BasketController {
 }
 
 async function getResponse(res, userId) {
-    const data = await Basket.findAll({ where: { userId } })
+    const data = await Basket.findAll({ 
+        where: { userId }, 
+        include: [{ model: Product, required: true, include: [{ model: Brand, required: true }]}] 
+    })
 
-    const productIds = data.map((i) => i.productId)
-    const products = await Product.findAll({ where: { id: { [Op.in]: productIds } } } )
+    const result = data.map((i) => {
+        const { id, size, product } = i
 
-    const response = preparedResponse(data, products)
-
-    return res.json(response)
-}
-
-function preparedResponse(data, products) {
-    const result = {}
-
-    data.forEach((i) => {
-        const { productId, size } = i
-
-        if(result[productId]) {
-            result[productId] = { count: result[productId].count + 1, sizes: [...result[productId].sizes, size] }
-        } else {
-            result[productId] = { count: 1, sizes: [size] }
+        return {
+            id,
+            size,
+            img: product.img,
+            name: product.name, 
+            price: product.price,
+            brand: product.brand.name,
         }
     })
 
-    products.forEach((product) => {
-        result[product.id].product = product.toJSON()
-    })
-
-    return Object.values(result)
+    return res.json(result)
 }
 
 module.exports = new BasketController()

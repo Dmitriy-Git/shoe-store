@@ -9,10 +9,10 @@
 </script>
 
 <template>
-    <a-list :data-source="cartProducts" style="min-width: 100%;">
+    <a-list v-if="cartProducts" :data-source="cartProducts" style="min-width: 100%;">
         <template #renderItem="{ item }">
             <a-list-item @click.stop>
-                <CartItem :count="item.count" :product="item.product" :sizes="item.sizes" />
+                <CartItem :item="item" />
             </a-list-item>
         </template>
     </a-list>

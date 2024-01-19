@@ -1,25 +1,39 @@
 
 <script setup>
     import Menu from './Menu.vue'
+    import { LogoutOutlined } from '@ant-design/icons-vue';
+    import { computed, onMounted } from 'vue'
+    import { useStore } from 'vuex'
+    import { useRouter } from 'vue-router'
+
+    const store = useStore()
+    const router = useRouter()
+
+    const getUser = computed(() => store.getters[`auth/getUser`])
+
+    onMounted(() => {
+        if (localStorage.getItem('token')) store.dispatch('auth/check')
+    })
+
+    const logout = () => {
+        store.commit('auth/logout')
+        router.push({ name: 'Login' })
+    }
 </script>
 
 <template>
-    <a-layout>
+    <a-layout style="min-height: 100vh;">
         <a-layout-header class="header">
             <div class="header-menu_container">
                 <h1 class="logo">SneakMax</h1>
                 <Menu /> 
+                <a-tooltip v-if="getUser">
+                    <template #title>
+                        <span> Выйти </span>
+                    </template>
+                    <LogoutOutlined @click="logout" style="font-size: 22px; color: #FFFFFF;" />
+                </a-tooltip>
             </div>
-            <div class="header-decription">
-                <h2 class="header-decription_text">
-                    Кроссовки известных брендов <br /> с доставкой по России и СНГ
-                </h2>
-                <p class="header-decription_text">
-                    Мы продаем кроссовки брендов Nike, Adidas, Puma, Reebok, <br />
-                    Converse и многие другие по низким ценам
-                </p>
-            </div>
-            <h2  class="header-decription_back-text">SneakMax</h2>
         </a-layout-header>
         <a-layout-content class="content">
             <router-view />
@@ -32,12 +46,7 @@
 
 <style scoped>
     .header {
-        position: relative;
         background-color: #484283;
-        border-bottom: 1px solid #FFFFFF;
-        min-height: 45vh;
-        max-height: 45vh;
-        padding-inline: 0;
         padding: 0 100px;
     }
 
@@ -47,38 +56,17 @@
         justify-content: center; 
         border-bottom: 1px solid #FFFFFF;
     }
-
-    .header-decription {
-        margin-top: 50px;
-    }
-
-    .header-decription_text {
-        color: #FFFFFF;
-        line-height: 30px;
-    }
-
-    .header-decription_back-text {
-        position: absolute; 
-        top: 100px;  
-        color: #FFFFFF; 
-        left: 50%; 
-        transform: translate(-50%, 0); 
-        opacity: 0.3; 
-        font-size: 200px; 
-        line-height: 200px;
-    }
-
     .logo {
         color: #FFFFFF;
     }
 
     .content {
         background-color: #FFFFFF;
-        min-height: 45vh;
+        min-height: 55vh;
+        position: relative;
     }
     .footer {
         background-color: #444B58;
-        min-height: 10vh;
         padding-left: 100px;
     }
 </style>

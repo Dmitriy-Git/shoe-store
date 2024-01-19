@@ -1,7 +1,8 @@
 
 <script setup>
-    import { ref, watch, h } from 'vue'
+    import { ref, watch, h, reactive } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
+    import { UserOutlined } from '@ant-design/icons-vue';
     import CartBadge from './CartBadge.vue'
 
     const router = useRouter()
@@ -9,7 +10,7 @@
 
     const selectedKeys = ref(['/']);
 
-    const items = ref([
+    const items = reactive([
         {
             key: '/',
             label: 'Каталог',
@@ -24,6 +25,12 @@
             key: '/contact',
             label: 'Контакты',
             title: 'Контакты',
+        },
+        {
+            key: '/profile',
+            icon: h(UserOutlined),
+            label: 'Профиль',
+            title: 'Профиль',
         },
         {
             key: '/cart',

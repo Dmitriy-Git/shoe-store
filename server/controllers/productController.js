@@ -29,15 +29,16 @@ class ProductController {
     }
 
     async getAll(req, res, next) {
-        const { limit = 9, page = 1, brands, rangePrice, sortByPrice } = req.query
+        const { limit = 9, page = 1, brands, rangePrice, sortByPrice, sizes } = req.query
 
-        const rangeList = rangePrice?.split(',')
-        const brandList = brands?.split(',')
+        const rangeList = rangePrice ? rangePrice.split(',') : ''
+        const brandList = brands ? brands.split(',') : ''
 
         let offset = page * limit - limit
 
         const whereOptions = {}
         const orderOptions = []
+        const includeOption = []
 
         if(brandList) {
             whereOptions.brandId = {
@@ -61,8 +62,19 @@ class ProductController {
             orderOptions.push(['price', sortByPrice === 'asc' ? 'ASC' : 'DESC'])
         }
 
+        if(sizes) {
+            includeOption.push({ model: ProductSize, required: true, where: { 'sizeId': sizes.split(',') } })
+        }
+
         try {
-            const data = await Product.findAndCountAll({ limit, offset, where: whereOptions, order: orderOptions })
+            const data = await Product.findAndCountAll({ 
+                limit, 
+                offset, 
+                where: whereOptions, 
+                order: orderOptions, 
+                include: includeOption,
+                distinct: true,
+            })
 
             return res.json(data) 
         } catch(error) {
