@@ -26,6 +26,18 @@ class BasketController {
         }
     }
 
+    async deleteAll(req, res, next) {
+        const { userId, ids } = req.body
+
+        try {
+            await Basket.destroy({ where: { userId, id: ids } })
+
+            return getResponse(res, userId)
+        } catch(e) {
+            next(e)
+        }
+    }
+
     async getAll(req, res, next) {
         const { userId } = req.query
 
@@ -46,11 +58,12 @@ async function getResponse(res, userId) {
     })
 
     const result = data.map((i) => {
-        const { id, size, product } = i
+        const { id, productId, size, product } = i
 
         return {
             id,
             size,
+            productId,
             img: product.img,
             name: product.name, 
             price: product.price,

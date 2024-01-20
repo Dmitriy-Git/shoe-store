@@ -35,6 +35,10 @@ export const deleteProductToCart = (params) => {
         })      
 }
 
+export const deleteProductsToCart = (data) => {
+        return axios.delete(`${SERVER_PATH}api/basket/all`, { data })  
+}
+
 export const checkAuth = () => {
         const token = localStorage.getItem('token')
 
@@ -62,4 +66,14 @@ export const updateUser = (params) => {
                 { email, password, id }, 
                 { headers: {"Authorization" : `Bearer ${token}`} }
         ) 
+}
+
+export const createOrder = (params) => {
+        return axios.post(`${SERVER_PATH}api/order`, { ...params })
+}
+
+export const getOrder = (userId) => {
+        return axios.get(`${SERVER_PATH}api/order`, {
+                params: { userId }
+        })
 }

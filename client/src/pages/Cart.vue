@@ -1,13 +1,39 @@
 
 <script setup>
-    import { computed } from 'vue'
+    import { computed, ref } from 'vue'
     import { useStore } from 'vuex'
     import CartList from '../components/CartList.vue'
+    import { createOrder } from '../api'
+    import { message } from 'ant-design-vue';
 
     const store = useStore()
 
+    const formState = ref({
+        comment: '',
+    });
+
+    const userId = computed(() => store.getters['auth/getUserId'])
     const cartCount = computed(() => store.getters[`cart/cartCount`])
     const totalPrice = computed(() => store.getters['cart/totalPrice'])
+    const cartIds = computed(() => store.getters['cart/cartIds'])
+    const productIds = computed(() => store.getters['cart/productIds'])
+
+    const onFinish = (values) => {
+        const params = {
+            comment: values.comment,
+            userId: userId.value,
+            productIds: productIds.value.join(',')
+        }
+
+        createOrder(params)
+            .then(() => {
+                store.dispatch('cart/deleteProducts', { userId: userId.value, ids: cartIds.value })
+
+                formState.value.comment = ''
+                message.success('Заказ создан')
+            })
+            .catch((e) => console.log(e))
+    };
 </script>
 
 <template>
@@ -18,22 +44,16 @@
         <div class="list_container">
             <CartList />
         </div>
-        <a-from name="checkout" style="width: 40%; margin-top: 20px;">
-            <a-form-item name="username">
-                <a-input placeholder="имя"/>
-            </a-form-item>
-            <a-form-item name="phone">
-                <a-input placeholder="номер телефона"/>
-            </a-form-item>
-            <a-form-item name="email">
-                <a-input placeholder="email"/>
+        <a-form :model="formState" name="order" @finish="onFinish" style="margin-top: 20px;">
+            <a-form-item name="comment">
+                <a-textarea v-model:value="formState.comment" placeholder="ваш комментарий к заказу" allow-clear :maxlength="300" />
             </a-form-item>
             <a-form-item>
                 <a-button type="primary" html-type="submit" class="button_container" :disabled="!totalPrice">
                     Оформить заказ
                 </a-button>
             </a-form-item>
-        </a-from>
+        </a-form>
     </div>
 </template>
 

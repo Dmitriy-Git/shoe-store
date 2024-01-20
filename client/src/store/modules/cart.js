@@ -1,4 +1,4 @@
-import { getCart, addProductToCart, deleteProductToCart } from '../../api'
+import { getCart, addProductToCart, deleteProductToCart, deleteProductsToCart } from '../../api'
 
 const state = () => ({
     productCart: null
@@ -8,6 +8,12 @@ const state = () => ({
 const getters = {
     cartProducts: (state) => {
         return state.productCart
+    },
+    cartIds: (state) => {
+        return state.productCart?.map((product) => product.id)
+    },
+    productIds: (state) => {
+        return state.productCart?.map((product) => product.productId)
     },
     cartCount: (state) => {
         return state.productCart?.length || 0
@@ -34,6 +40,11 @@ const actions = {
     },
     deleteProduct ({ commit }, params) {
         deleteProductToCart(params)
+            .then(({ data }) => { commit('setCart', data) })
+            .catch(e => console.log(e))
+    },
+    deleteProducts({ commit }, params) {
+        deleteProductsToCart(params)
             .then(({ data }) => { commit('setCart', data) })
             .catch(e => console.log(e))
     }

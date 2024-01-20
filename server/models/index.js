@@ -47,6 +47,24 @@ const ProductInfo = sequelize.define('productInfo', {
     description: {type: DataTypes.STRING(1000), allowNull: false},
 })  
 
+const Order = sequelize.define('oder', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    userId: { type: DataTypes.INTEGER, allowNull: false, },
+    comment: {type: DataTypes.STRING(1000) },
+})
+
+const OrderList = sequelize.define('oderList', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    productId: { type: DataTypes.INTEGER, allowNull: false, },
+    orderId: { type: DataTypes.INTEGER, allowNull: false, },
+})
+
+User.hasMany(Order)
+Order.belongsTo(User)
+
+Product.hasMany(OrderList)
+OrderList.belongsTo(Product)
+
 
 User.hasOne(Basket)
 Basket.belongsTo(User)
@@ -76,4 +94,6 @@ module.exports = {
     ProductSize,
     ProductInfo,
     Basket,
+    Order,
+    OrderList,
 }
