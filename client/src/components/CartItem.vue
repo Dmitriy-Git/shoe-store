@@ -3,7 +3,7 @@
     import { computed } from 'vue'
     import { useStore } from 'vuex'
     import { DeleteOutlined } from '@ant-design/icons-vue';
-    import { SERVER_PATH } from '../api'
+    import { SERVER_PATH } from '../const'
 
     const { item } = defineProps({ item: Object })
 

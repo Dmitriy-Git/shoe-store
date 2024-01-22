@@ -2,23 +2,21 @@
 <script setup>
     import { useRouter } from 'vue-router'
     import useProductDetail from '../hooks/useProductDetail'
-    import { SERVER_PATH } from '../api'
+    import { SERVER_PATH } from '../const'
 
     const router = useRouter()
 
     const { dataSource, sizeGroup, sizeOptions, addProductToCart } = useProductDetail()
 
-    const cancel = () => router.go(-1)
-
     const submit = () => {
         addProductToCart()
-        cancel()
+        router.go(-1)
     }
     
 </script>
 
 <template>
-    <a-modal :open="true" @cancel="cancel" width="900px" :footer="null" :bodyStyle="{ padding: '20px 10px' }">
+    <a-modal :open="true" @cancel="router.go(-1)" width="900px" :footer="null" :bodyStyle="{ padding: '20px 10px' }">
         <div class="product-detail-container">
             <a-image
                 v-if="dataSource?.img"

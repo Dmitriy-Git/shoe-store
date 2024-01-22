@@ -7,7 +7,7 @@ const state = () => ({
 
 const getters = {
     cartProducts: (state) => {
-        return state.productCart
+        return state.productCart?.length ? state.productCart : null
     },
     cartIds: (state) => {
         return state.productCart?.map((product) => product.id)

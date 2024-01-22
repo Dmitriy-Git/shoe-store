@@ -3,6 +3,7 @@ import Main from './pages/Main.vue'
 import Cart from './pages/Cart.vue'
 import About from './pages/About.vue'
 import Login from './pages/Login.vue'
+import Order from './pages/ Order.vue'
 import Contact from './pages/Contact.vue' 
 import Profile from './pages/Profile.vue'
 import ProductDetailPopup from './components/ProductDetailPopup.vue'
@@ -40,6 +41,11 @@ const routes = [
         path: '/profile',
         name: 'Profile',
         component: Profile,
+    },
+    {
+        path: '/order',
+        name: 'Order',
+        component: Order,
     }
 ]
 

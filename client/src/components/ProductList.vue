@@ -8,8 +8,8 @@
         filters: Object,
     })
 
-    const { columns } = useGridColumns()
-    const { loadMore, dataSource, loading, onClickByCard } = useProductList(filters)
+    const { loadMore, rows, count, length, loading, onClickByCard } = useProductList(filters)
+    const { columns } = useGridColumns(length)
   
 </script>
 
@@ -17,7 +17,7 @@
   <div class="product-list_container">
     <a-list 
       :grid="{ gutter: 6, column: columns }" 
-      :data-source="dataSource.rows" 
+      :data-source="rows" 
       :loading="loading" 
     >
       <template #renderItem="{ item }">
@@ -26,14 +26,11 @@
         </a-list-item>
       </template>
     </a-list>
-    <div 
-      v-if="dataSource.rows.length && dataSource.count === dataSource.rows.length" 
-      class="product-list_all_container"
-    > 
+    <div v-if="count === length" class="product-list_all_container"> 
       Вы посмотрели весь список
     </div>
     <a-button 
-      v-if="dataSource.count !== dataSource.rows.length" 
+      v-if="count !== length" 
       type="primary" 
       class="product-list_button_container" 
       @click="loadMore">

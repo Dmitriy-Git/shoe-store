@@ -1,7 +1,7 @@
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, watch, onUnmounted } from 'vue'
 
 
-export default function useGridColumns() {
+export default function useGridColumns(listLength) {
     const columns = ref(window.innerWidth < 1600 ? 2 : 3)
 
     const onResize = (e) => {
@@ -15,6 +15,11 @@ export default function useGridColumns() {
     onUnmounted(() => {
         window.removeEventListener('resize', onResize);
     }) 
+
+    watch(listLength, (newValue) => {
+        if(newValue <= 3) columns.value = 2
+        else columns.value = 3
+    })
 
     return { columns }
 }

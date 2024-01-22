@@ -26,7 +26,7 @@
     watch(
         () => route.path,
         () => {
-            visible.value = ['/cart', '/login'].includes(route.path)
+            visible.value = ['/cart', '/login', '/order'].includes(route.path)
         }
     )
 </script>
@@ -50,10 +50,16 @@
                         <CartList />
                     </div>
                     <div class="dropdown_footer">
-                        <h3>Итого: {{ totalPrice }}</h3>
-                        <a-button type="primary" class="button_container" @click="router.push('/cart')">
-                            Перейти в корзину
-                        </a-button>
+                        <template v-if="totalPrice">
+                            <h3> Итого: {{ totalPrice }}</h3>
+                            <a-button 
+                                type="primary" 
+                                class="button_container" 
+                                @click="router.push('/cart')"
+                            >
+                                Перейти в корзину
+                            </a-button>
+                        </template>
                     </div>
                 </div>
             </template>
@@ -71,12 +77,16 @@
         border-radius: 6px;
         padding: 10px;
         background-color: #FFFFFF;
+        position: relative;
+        min-height: 250px;
+        border: 1px solid;
     }
 
     .dropdown_footer {
         display: flex;
         justify-content: space-between;
-        margin-top: 20px;
+        margin-bottom: 0;
+        margin-top: auto;
     }
 
     .list_container {

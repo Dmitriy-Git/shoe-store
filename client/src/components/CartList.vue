@@ -2,6 +2,7 @@
     import { computed } from 'vue'
     import { useStore } from 'vuex'
     import CartItem from './CartItem.vue'
+    import EmptyList from '../assets/empty_list.svg'
 
     const store = useStore()
 
@@ -16,7 +17,18 @@
             </a-list-item>
         </template>
     </a-list>
+    <a-result v-else title="Список пуст" class="result_container">
+        <template #icon>
+            <EmptyList style="width: 150px; height: 150px;" />
+        </template>
+    </a-result>
 </template>
 
 <style scoped>
+    .result_container {
+        position: absolute;  
+        top: 50%;
+        left: 50%; 
+        transform: translate(-50%, -50%);
+    }
 </style>

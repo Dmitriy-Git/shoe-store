@@ -1,54 +1,18 @@
 
 <script setup>
-    import { ref } from 'vue'
     import { UpOutlined, DownOutlined  } from '@ant-design/icons-vue';
+    import useProductFilters from '../hooks/useProductFilters';
 
     const emit = defineEmits(['submit'])
 
-    const formState = ref({
-        minPrice: 0,
-        maxPrice: 40000,
-        brands: [],
-        checkedSizes: [],
-    });
-    const sortByPrice = ref('asc')
-
-    const reset = () => {
-        formState.value = {
-            minPrice: 0,
-            maxPrice: 40000,
-            brands: [],
-            checkedSizes: [],
-        }
-        sortByPrice.value = 'asc'
-
-        const result = {
-            rangePrice: undefined,
-            brands: undefined,
-            sortByPrice: undefined,
-            sizes: undefined,
-        }
-
-        emit('submit', result)
-    }
-
-    const onFinish = (values) => {
-        const { minPrice, maxPrice, brands, checkedSizes } = values
-
-        const result = {
-            rangePrice: [minPrice, maxPrice].join(','),
-            brands: Object.values(brands).join(','),
-            sortByPrice: sortByPrice.value,
-            sizes: Object.values(checkedSizes).join(','),
-        }
-
-        emit('submit', result)
-    };
-
-    const setOrder = () => {
-        sortByPrice.value = sortByPrice.value === 'asc' ? 'desc' : 'asc'
-    }
-
+    const {
+        formState,
+        sortByPrice,
+        reset,
+        onFinish,
+        setOrder,
+    } = useProductFilters(emit)
+    
     const brandsOptions = [
         {label: 'Adidas', value: 1}, 
         {label: 'Nike', value: 2}, 
@@ -57,7 +21,6 @@
     ];
 
     const sizesOptions = ['40', '41', '42', '43', '44', '45'];
-
 </script>
 
 <template>

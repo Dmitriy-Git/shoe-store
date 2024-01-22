@@ -1,6 +1,6 @@
 
 <script setup>
-    import { SERVER_PATH } from '../api'
+    import { SERVER_PATH } from '../const'
 
     const { id, name, price, img } = defineProps({
         id: Number,

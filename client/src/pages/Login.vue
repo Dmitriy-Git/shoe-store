@@ -1,22 +1,22 @@
 <script setup>
-import { reactive, computed } from 'vue';
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+  import { reactive, computed } from 'vue';
+  import { useStore } from 'vuex'
+  import { useRouter } from 'vue-router'
 
-const formState = reactive({
-  username: '',
-  password: '',
-});
+  const formState = reactive({
+    username: '',
+    password: '',
+  });
 
-const store = useStore()
-const router = useRouter()
+  const store = useStore()
+  const router = useRouter()
 
-const error = computed(() => store.getters[`auth/getError`])
+  const error = computed(() => store.getters[`auth/getError`])
 
-const onFinish = (values) => {
-  store.dispatch('auth/login', values)
-    .then(() => { router.push({ path: '/' }) })
-};
+  const onFinish = (values) => {
+    store.dispatch('auth/login', values)
+      .then(() => { router.push({ path: '/' }) })
+  };
 </script>
 
 <template>

@@ -1,79 +1,21 @@
 import axios from 'axios'
+import { login, checkAuth, registration, updateUser } from './user'
+import { getProductList, getProductDetail } from './product'
+import { createOrder, getOrder, deleteOrder } from './order'
+import { addProductToCart, getCart, deleteProductToCart, deleteProductsToCart } from './basket'
 
-
-export const SERVER_PATH = 'http://localhost:3000/'
-
-export const getProductList = (params = {}) => {
-        const { page = 1, rangePrice, brands, limit = 9, sortByPrice, sizes } = params
-
-        return axios.get(`${SERVER_PATH}api/product`, {
-           params: { page, limit, brands, rangePrice, sortByPrice, sizes }     
-        })
-}
-
-export const getProductDetail = (id) => {
-        return axios.get(`${SERVER_PATH}api/product/${id}`)    
-}
-
-export const addProductToCart = (params) => {
-        const { userId, productId, size } = params
-
-        return axios.post(`${SERVER_PATH}api/basket`, { size, userId, productId })
-}
-
-export const getCart = (userId) => {
-        return axios.get(`${SERVER_PATH}api/basket`, {
-                params: { userId }
-        })
-}
-
-export const deleteProductToCart = (params) => {
-        const { userId, id } = params
-
-        return axios.delete(`${SERVER_PATH}api/basket`, {
-                data: { userId, id }
-        })      
-}
-
-export const deleteProductsToCart = (data) => {
-        return axios.delete(`${SERVER_PATH}api/basket/all`, { data })  
-}
-
-export const checkAuth = () => {
-        const token = localStorage.getItem('token')
-
-        return axios.get(`${SERVER_PATH}api/user/auth`, { headers: {"Authorization" : `Bearer ${token}`} })
-}
-
-export const login = (params) => {
-        const { username, password } = params
-
-        return axios.post(`${SERVER_PATH}api/user/login`, { email: username, password })
-}
-
-export const registration = (params) => {
-        const { username, password } = params
-
-        return axios.post(`${SERVER_PATH}api/user/registration`, { email: username, password })
-}
-
-export const updateUser = (params) => {
-        const token = localStorage.getItem('token')
-  
-        const { username: email, password, id } = params
-
-        return axios.put(`${SERVER_PATH}api/user/update`, 
-                { email, password, id }, 
-                { headers: {"Authorization" : `Bearer ${token}`} }
-        ) 
-}
-
-export const createOrder = (params) => {
-        return axios.post(`${SERVER_PATH}api/order`, { ...params })
-}
-
-export const getOrder = (userId) => {
-        return axios.get(`${SERVER_PATH}api/order`, {
-                params: { userId }
-        })
+export { 
+        login, 
+        checkAuth, 
+        registration, 
+        updateUser, 
+        getProductList, 
+        getProductDetail, 
+        getCart, 
+        addProductToCart, 
+        deleteProductToCart, 
+        deleteProductsToCart,
+        createOrder,  
+        getOrder,
+        deleteOrder,
 }

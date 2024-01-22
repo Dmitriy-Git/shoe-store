@@ -1,16 +1,20 @@
 
 <script setup>
-    import { ref, watch, h, reactive } from 'vue'
+    import { ref, watch, h, computed } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
+    import { useStore } from 'vuex'
     import { UserOutlined } from '@ant-design/icons-vue';
     import CartBadge from './CartBadge.vue'
 
     const router = useRouter()
     const route = useRoute()
+    const store = useStore()
 
     const selectedKeys = ref(['/']);
 
-    const items = reactive([
+    const getUser = computed(() => store.getters[`auth/getUser`])
+
+    const items = [
         {
             key: '/',
             label: 'Каталог',
@@ -37,9 +41,17 @@
             title: 'Корзина',
             label : h(CartBadge),
         },
-    ])
+        {
+            key: '/order',
+            title: 'Заказы',
+            label: 'Заказы',
+        }
+    ]
 
-    // watch api https://v3.ru.vuejs.org/ru/api/computed-watch-api.html#watch
+    const renderItems = computed(() => {
+        return getUser.value ? items : [] 
+    })
+    
     watch(
         () => route.path, 
         () => {
@@ -57,7 +69,7 @@
     <a-menu 
         :selectedKeys="selectedKeys" 
         mode="horizontal" 
-        :items="items" 
+        :items="renderItems" 
         @select="select" 
         class="container" 
         theme="dark" 

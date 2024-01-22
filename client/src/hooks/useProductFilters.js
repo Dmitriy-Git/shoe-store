@@ -1,22 +1,55 @@
-import { reactive } from 'vue'
+import { ref } from 'vue'
 
-export default function useProductFilters() {
-    const filters = reactive({
-        rangePrice: null,
-        brands: null,
-        sortByPrice: null,
-        sizes: null,
-    })
+export default function useProductFilters(emit) {
+    const formState = ref({
+        minPrice: 0,
+        maxPrice: 40000,
+        brands: [],
+        checkedSizes: [],
+    });
+    const sortByPrice = ref('asc')
 
+    const reset = () => {
+        formState.value = {
+            minPrice: 0,
+            maxPrice: 40000,
+            brands: [],
+            checkedSizes: [],
+        }
+        sortByPrice.value = 'asc'
 
-    const applyFilters = (value) => {
-        const { brands, rangePrice, sortByPrice, sizes } = value
+        const result = {
+            rangePrice: undefined,
+            brands: undefined,
+            sortByPrice: undefined,
+            sizes: undefined,
+        }
 
-        filters.brands = brands
-        filters.rangePrice = rangePrice
-        filters.sortByPrice = sortByPrice
-        filters.sizes = sizes
+        emit('submit', result)
     }
 
-    return { filters, applyFilters } 
+    const onFinish = (values) => {
+        const { minPrice, maxPrice, brands, checkedSizes } = values
+
+        const result = {
+            rangePrice: [minPrice, maxPrice].join(','),
+            brands: Object.values(brands).join(','),
+            sortByPrice: sortByPrice.value,
+            sizes: Object.values(checkedSizes).join(','),
+        }
+
+        emit('submit', result)
+    };
+
+    const setOrder = () => {
+        sortByPrice.value = sortByPrice.value === 'asc' ? 'desc' : 'asc'
+    }
+
+    return {
+        formState,
+        sortByPrice,
+        reset,
+        onFinish,
+        setOrder,
+    }
 }

@@ -66,15 +66,16 @@
         background-color: #FFFFFF;
         width: 50%;
         margin: auto;
+        position: relative;
     }
 
     .list_container {
-        border: 1px solid #D9D9D9;
         border-radius: 6px;
         padding: 10px;
         min-width: 600px;
         max-height: 600px;
-        overflow-y: scroll;
+        min-height: 250px;
+        overflow-y: auto;
     }
 
     .button_container {

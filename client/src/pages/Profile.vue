@@ -12,25 +12,16 @@
         store.dispatch('auth/update', { ...values, id: user.value.id })
             .then(() => { message.success('Изменение сохранены') })
     };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
 </script>
 
 <template>
     <div class="wrapper">
         <h2>Редактировать профиль</h2>
         <div class="form_container">
-            <a-avatar :size="200">
+            <a-avatar :size="220">
                 <template #icon><UserOutlined /></template>
             </a-avatar>
-            <a-form
-                :model="user"
-                name="editProfile"
-                @finish="onFinish"
-                @finishFailed="onFinishFailed"
-            >
+            <a-form :model="user" name="edit-profile" @finish="onFinish">
                 <a-form-item name="username" v-if="user">
                     <a-input v-model:value="user.username" />
                 </a-form-item>
@@ -65,6 +56,7 @@
         width: 550px;
         margin: auto;
         display: flex;
+        align-items: flex-end;
         justify-content: space-between;
     }
 

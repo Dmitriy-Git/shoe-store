@@ -1,4 +1,4 @@
-import { ref, onMounted, watch, reactive } from 'vue'
+import { ref, onMounted, watch, computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { getProductList } from '../api'
 
@@ -37,6 +37,18 @@ export default function useProductList(filters) {
         getData()
     })
 
+    const length = computed(() => {
+        return dataSource.rows?.length || 0
+    })
+
+    const rows = computed(() => {
+        return dataSource.rows
+    })
+
+    const count = computed(() => {
+        return dataSource.count
+    })
+
     watch(page, (newValue) => {
         const params = { page: newValue, ...filters }
 
@@ -60,5 +72,5 @@ export default function useProductList(filters) {
         router.push(`/product/${id}/popup`)
     }
       
-    return { dataSource, loading, loadMore, onClickByCard }
+    return { rows, count, length, loading, loadMore, onClickByCard }
 }

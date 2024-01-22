@@ -1,10 +1,23 @@
 <script setup>
+    import { reactive } from 'vue' 
     import ProductList from '../components/ProductList.vue'
     import ProductFilters from '../components/ProductFilters.vue'
 
-    import useProductFilters from '../hooks/useProductFilters'
+    const filters = reactive({
+        rangePrice: null,
+        brands: null,
+        sortByPrice: null,
+        sizes: null,
+    })
 
-    const { filters, applyFilters } = useProductFilters()
+    const applyFilters = (value) => {
+        const { brands, rangePrice, sortByPrice, sizes } = value
+
+        filters.brands = brands
+        filters.rangePrice = rangePrice
+        filters.sortByPrice = sortByPrice
+        filters.sizes = sizes
+    }
 </script>
 
 <template>

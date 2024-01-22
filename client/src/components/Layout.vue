@@ -31,7 +31,7 @@
                     <template #title>
                         <span> Выйти </span>
                     </template>
-                    <LogoutOutlined @click="logout" style="font-size: 22px; color: #FFFFFF;" />
+                    <LogoutOutlined @click="logout" class="logout_container" />
                 </a-tooltip>
             </div>
         </a-layout-header>
@@ -51,13 +51,17 @@
     }
 
     .header-menu_container {
-        display: flex; 
-        width: 100%; 
-        justify-content: center; 
-        border-bottom: 1px solid #FFFFFF;
+        display: flex;  
     }
+
     .logo {
         color: #FFFFFF;
+    }
+
+    .logout_container {
+        font-size: 22px; 
+        color: #FFFFFF;
+         margin-bottom: 5px;
     }
 
     .content {
