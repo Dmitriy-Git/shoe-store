@@ -3,7 +3,6 @@
     import { computed, ref } from 'vue'
     import { useStore } from 'vuex'
     import CartList from '../components/CartList.vue'
-    import { createOrder } from '../api'
     import { message } from 'ant-design-vue';
 
     const store = useStore()
@@ -25,7 +24,8 @@
             productIds: productIds.value.join(',')
         }
 
-        createOrder(params)
+        store.dispatch('order/createOrder', params)
+            .then(() => store.dispatch('order/fetchOrders', userId.value))
             .then(() => {
                 store.dispatch('cart/deleteProducts', { userId: userId.value, ids: cartIds.value })
 

@@ -1,10 +1,11 @@
 
 <script setup>
-    import { ref, watch, h, computed } from 'vue'
+    import { ref, watch, h, computed, onMounted } from 'vue'
     import { useRouter, useRoute } from 'vue-router'
     import { useStore } from 'vuex'
     import { UserOutlined } from '@ant-design/icons-vue';
     import CartBadge from './CartBadge.vue'
+    import OrderBadge from './OrderBadge.vue';
 
     const router = useRouter()
     const route = useRoute()
@@ -44,12 +45,16 @@
         {
             key: '/order',
             title: 'Заказы',
-            label: 'Заказы',
+            label: h(OrderBadge),
         }
     ]
 
     const renderItems = computed(() => {
         return getUser.value ? items : [] 
+    })
+
+    onMounted(() => {
+        selectedKeys.value = [route.path]
     })
     
     watch(

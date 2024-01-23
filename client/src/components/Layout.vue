@@ -26,13 +26,15 @@
         <a-layout-header class="header">
             <div class="header-menu_container">
                 <h1 class="logo">SneakMax</h1>
-                <Menu /> 
-                <a-tooltip v-if="getUser">
+                <template v-if="getUser">
+                    <Menu /> 
+                    <a-tooltip>
                     <template #title>
                         <span> Выйти </span>
                     </template>
                     <LogoutOutlined @click="logout" class="logout_container" />
                 </a-tooltip>
+                </template>
             </div>
         </a-layout-header>
         <a-layout-content class="content">

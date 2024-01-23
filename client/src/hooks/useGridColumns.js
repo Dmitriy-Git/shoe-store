@@ -16,8 +16,10 @@ export default function useGridColumns(listLength) {
         window.removeEventListener('resize', onResize);
     }) 
 
-    watch(listLength, (newValue) => {
-        if(newValue <= 3) columns.value = 2
+    watch(listLength, (value, prevValue) => {
+        if(!prevValue) return
+
+        if(value <= 3) columns.value = 2
         else columns.value = 3
     })
 

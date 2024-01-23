@@ -1,6 +1,6 @@
 
 <script setup>
-    import { computed, watch, ref } from 'vue'
+    import { computed, watch, ref, onMounted } from 'vue'
     import { useStore } from 'vuex'
     import { useRouter, useRoute } from 'vue-router'
     import BasketSVG from '../assets/basket.svg'
@@ -16,11 +16,8 @@
     const totalPrice = computed(() => store.getters['cart/totalPrice'])
     const userId = computed(() => store.getters['auth/getUserId'])
 
-    watch([userId], (newValue) => {
-        const id = newValue[0]
-
-        if (id) store.dispatch('cart/getAllProducts', id)
-        else store.commit('cart/setCart', null)
+    onMounted(() => {
+        if (userId.value) { store.dispatch('cart/getAllProducts', userId.value) }
     })
 
     watch(
@@ -44,7 +41,7 @@
                     <BasketSVG />
                 </a-badge>
             </div>
-            <template #overlay>
+            <template #overlay v-if="cartCount">
                 <div class="dropdown_container">
                     <div class="list_container">
                         <CartList />

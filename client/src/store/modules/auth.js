@@ -14,6 +14,9 @@ const getters = {
     getUserId: (state) => {
         return state.user?.id || null
     },
+    getLoading: () => {
+        return state.loading
+    },
     getError: (state) => {
         return state.error
     },
@@ -21,7 +24,7 @@ const getters = {
 
 const actions = {
     login ({ commit }, params) {
-        commit('setLoading', true)
+        commit('setLoadingAuth', true)
 
         return new Promise((resolve, reject) => {
             loginApi(params)
@@ -34,11 +37,11 @@ const actions = {
                 commit('setError', e.response.data.error)
                 reject(e)
             })
-            .finally(() => commit('setLoading', false))
+            .finally(() => commit('setLoadingAuth', false))
         })
     },
     registration ({ commit }, params) {
-        commit('setLoading', true)
+        commit('setLoadingAuth', true)
 
         registrationApi(params)
             .then(({ data }) => { 
@@ -46,21 +49,21 @@ const actions = {
                 commit('setUser', data.user) 
             })
             .catch(e => commit('setError', e))
-            .finally(() => commit('setLoading', false))
+            .finally(() => commit('setLoadingAuth', false))
 
     },
     check ({ commit }) {
-        commit('setLoading', true)
+        commit('setLoadingAuth', true)
 
         checkAuth()
             .then(({ data }) => {
                 commit('setUser', data.user) 
             })
             .catch(e => commit('setError', e.response.data.message))
-            .finally(() => commit('setLoading', false))
+            .finally(() => commit('setLoadingAuth', false))
     },
     update ({ commit }, params) {
-        commit('setLoading', true)
+        commit('setLoadingAuth', true)
 
         return new Promise((resolve, reject) => {
             updateUser(params)
@@ -73,7 +76,7 @@ const actions = {
                     commit('setError', e.response.data.error)
                     reject(e)
                 })
-                .finally(() => commit('setLoading', false))
+                .finally(() => commit('setLoadingAuth', false))
         })
     }
 }
@@ -82,7 +85,7 @@ const mutations = {
     setUser (state, user) {
       state.user = user
     },
-    setLoading (state, loading) {
+    setLoadingAuth (state, loading) {
         state.loading = loading
     },
     setError (state, error) {

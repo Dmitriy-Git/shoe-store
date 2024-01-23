@@ -1,15 +1,27 @@
 <script setup>
-    import useOrderData from '../hooks/useOrderData'
+    import { computed, } from 'vue'
+    import { useStore } from 'vuex'
     import { DeleteOutlined } from '@ant-design/icons-vue';
     import EmptyList from '../assets/empty_list.svg'
     import OrderItem from '../components/OrderItem.vue'
 
-    const {  dataSource, loading, deleteOrderHandler } =  useOrderData()
+    const store = useStore()
+
+    const orders = computed(() => store.getters['order/getOrders'])
+    const loading = computed(() => store.getters['order/getLoading'])
+    const userId = computed(() => store.getters['auth/getUserId'])
+
+    const deleteOrderHandler = (id) => {
+        store.dispatch('order/deleteOrder', id)
+            .then(() => store.dispatch('order/fetchOrders', userId.value))
+            .catch(e => console.log(e))
+    }
+
 </script>
 
 <template>
     <div class="wrapper">
-    <a-list v-if="dataSource" :data-source="dataSource" style="width: 60%;">
+    <a-list v-if="orders" :data-source="orders" style="width: 60%;">
         <template #renderItem="{ item }">
             <a-list-item @click.stop>
                 <div class="order_container">
