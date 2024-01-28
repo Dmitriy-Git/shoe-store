@@ -18,7 +18,6 @@ const Product = sequelize.define('product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
-    rating: {type: DataTypes.INTEGER, defaultValue: 0},
     img: {type: DataTypes.STRING},
 })
 
@@ -59,12 +58,21 @@ const OrderList = sequelize.define('oderList', {
     orderId: { type: DataTypes.INTEGER, allowNull: false, },
 })
 
+const Rating = sequelize.define('rating', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    productId: { type: DataTypes.INTEGER, allowNull: false, },
+    userId: { type: DataTypes.INTEGER, allowNull: false, },
+    value: { type: DataTypes.INTEGER, allowNull: false },
+})
+
 User.hasMany(Order)
 Order.belongsTo(User)
 
 Product.hasMany(OrderList)
 OrderList.belongsTo(Product)
 
+Product.hasMany(Rating)
+Rating.belongsTo(Product)
 
 User.hasOne(Basket)
 Basket.belongsTo(User)
@@ -96,4 +104,5 @@ module.exports = {
     Basket,
     Order,
     OrderList,
+    Rating,
 }

@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { login, checkAuth, registration, updateUser } from './user'
 import { getProductList, getProductDetail } from './product'
 import { createOrder, getOrder, deleteOrder } from './order'
+import { getProductRatingForUser, createProductRating, deleteProductRatingForUser } from './rating'
 import { addProductToCart, getCart, deleteProductToCart, deleteProductsToCart } from './basket'
 
 export { 
@@ -18,4 +18,7 @@ export {
         createOrder,  
         getOrder,
         deleteOrder,
+        getProductRatingForUser,
+        createProductRating,
+        deleteProductRatingForUser,
 }

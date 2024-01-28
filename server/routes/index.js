@@ -5,6 +5,7 @@ const brandRouter = require('./brandRouter')
 const sizeRouter = require('./sizeRouter')
 const basketRoute = require('./basketRouter')
 const orderRoute = require('./orderRouter')
+const ratingRoute = require('./ratingRouter')
 
 const router = new Router()
 
@@ -14,6 +15,7 @@ router.use('/brand', brandRouter)
 router.use('/size', sizeRouter)
 router.use('/basket', basketRoute)
 router.use('/order', orderRoute)
+router.use('/rating', ratingRoute)
 
 
 module.exports = router

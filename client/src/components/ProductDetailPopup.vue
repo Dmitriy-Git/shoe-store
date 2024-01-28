@@ -3,6 +3,7 @@
     import { useRouter } from 'vue-router'
     import useProductDetail from '../hooks/useProductDetail'
     import { SERVER_PATH } from '../const'
+    import Rating from './Rating.vue'
 
     const router = useRouter()
 
@@ -28,7 +29,7 @@
                 <p class="product-detail_id_title">ID: {{ dataSource?.id }}</p>
                 <h2 class="product-detail-title">{{ dataSource?.name }}</h2>
 
-                <a-rate :value="dataSource?.rating || 2" disabled>
+                <a-rate :value="dataSource?.ratings" disabled>
                 </a-rate>
 
                 <div class="product-detail_size_container">
@@ -37,6 +38,7 @@
                 </div>
 
                 <p class="product-detail_price_title">{{ dataSource?.price }}</p>
+                <Rating :productId="dataSource?.id" />
                 <a-button type="primary" class="basket_button" @click="submit" :disabled="!sizeGroup">
                     Добавить в корзину
                 </a-button>

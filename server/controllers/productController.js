@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Product, ProductSize, ProductInfo, Size } = require('../models')
+const { Product, ProductSize, ProductInfo, Size, Rating } = require('../models')
 const saveFile = require('../helpers/saveFile')
 
 class ProductController {
@@ -96,21 +96,28 @@ class ProductController {
                     {
                         model: ProductInfo,
                         as: 'info'
+                    },
+                    {
+                        model: Rating,
+                        attributes: ['value']
                     }
                 ]  
             })
 
-            if (product.productSizes?.length) {
+            const ratingSum = product.ratings?.reduce((acc, i) => acc + i.value, 0)
+            const ratings = (ratingSum / product.ratings?.length).toFixed(2) || 0
+
+            if (product?.productSizes?.length) {
                 const sizeIds = product.productSizes.map((i) => i.sizeId)  
 
                 const sizes = await Size.findAll({
                     where: { id: { [Op.or]: sizeIds } }
                 })
 
-                return res.json({ ...product.toJSON(), sizes: sizes.map((i) => ({ id: i.id, size: i.size })) })
+                return res.json({ ...product.toJSON(), sizes: sizes.map((i) => ({ id: i.id, size: i.size })), ratings })
             }
 
-            return res.json(product)
+            return res.json({ ...product.toJSON(), ratings })
         } catch (error) {
            next(error)     
         }
