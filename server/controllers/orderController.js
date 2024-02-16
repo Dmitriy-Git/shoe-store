@@ -3,12 +3,12 @@ const { Order, OrderList, Product } = require('../models')
 
 class OrderController {
     async create(req, res, next) {
-        const { userId, productIds, comment } = req.body
+        const { userId, productIds, comment, sizes } = req.body
 
         try {
             const order = await Order.create({ userId, comment })
 
-            const result = productIds.split(',').map((productId) => ({ productId, orderId: order.id }))
+            const result = productIds.split(',').map((productId, index) => ({ productId, orderId: order.id, size: sizes[index] }))
 
             await OrderList.bulkCreate(result)
 

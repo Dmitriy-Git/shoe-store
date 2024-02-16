@@ -24,7 +24,7 @@ class UserController {
 
         const token = generateJwt(user.id, user.email)
 
-        return res.json({ token, user: { username: user.email, id: user.id } })
+        return res.json({ token, user: { username: user.email, id: user.id, password: user.password } })
     }
 
     async login(req, res, next) {

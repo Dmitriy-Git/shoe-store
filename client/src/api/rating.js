@@ -10,8 +10,6 @@ export const getProductRatingForUser = (params = {}) => {
 }
 
 export const createProductRating = (params) => {
-    console.log(params, 'params')
-
     return axios.post(`${SERVER_PATH}api/rating`, { ...params })
 }
 

@@ -37,10 +37,6 @@ export default function useProductList(filters) {
         getData()
     })
 
-    const length = computed(() => {
-        return dataSource.rows?.length || 0
-    })
-
     const rows = computed(() => {
         return dataSource.rows
     })
@@ -72,5 +68,5 @@ export default function useProductList(filters) {
         router.push(`/product/${id}/popup`)
     }
       
-    return { rows, count, length, loading, loadMore, onClickByCard }
+    return { rows, count, loading, loadMore, onClickByCard }
 }

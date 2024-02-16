@@ -29,7 +29,8 @@ export default function useProductFilters(emit) {
     }
 
     const onFinish = (values) => {
-        const { minPrice, maxPrice, brands, checkedSizes } = values
+        const { brands, checkedSizes } = values
+        const { minPrice, maxPrice } = formState.value
 
         const result = {
             rangePrice: [minPrice, maxPrice].join(','),

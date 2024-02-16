@@ -3,7 +3,7 @@
     import { useRouter } from 'vue-router'
     import useProductDetail from '../hooks/useProductDetail'
     import { SERVER_PATH } from '../const'
-    import Rating from './Rating.vue'
+    import Rating from '../components/rating.vue'
 
     const router = useRouter()
 
@@ -29,6 +29,7 @@
                 <p class="product-detail_id_title">ID: {{ dataSource?.id }}</p>
                 <h2 class="product-detail-title">{{ dataSource?.name }}</h2>
 
+                <p class="product-detail_size_container__title">Рейтинг товара</p>
                 <a-rate :value="dataSource?.ratings" disabled>
                 </a-rate>
 

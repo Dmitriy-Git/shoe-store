@@ -2,7 +2,7 @@
 <script setup>
     import { SERVER_PATH } from '../const'
 
-    const { item } = defineProps({ item: Object })
+    const { item, size } = defineProps({ item: Object, size: Number })
 </script>
 
 <template>
@@ -13,7 +13,7 @@
         <div style="margin-left: 15px;">    
             <h3>{{ item.name }}</h3>
             <p>Цена: {{ item.price }}</p>
-            <p>Размер: {{ item.size }}</p>
+            <p>Размер: {{ size }}</p>
         </div>    
     </div>
 </template>

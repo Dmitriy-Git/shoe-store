@@ -33,8 +33,7 @@
                 @finish="onFinish"
                 style="width: 100%;"
             >
-                <a-form-item name="minPrice">
-                    <a-row>
+                    <a-row style="margin-bottom: 15px;">
                         <a-col :span="14">
                             <a-slider v-model:value="formState.minPrice" :min="0" :max="40000" />
                         </a-col>
@@ -48,9 +47,7 @@
                             />
                         </a-col>
                     </a-row>
-                </a-form-item>
-                <a-form-item name="maxPrice">
-                    <a-row>
+                    <a-row style="margin-bottom: 15px;">
                         <a-col :span="14">
                             <a-slider v-model:value="formState.maxPrice" :min="0" :max="40000" />
                         </a-col>
@@ -64,7 +61,6 @@
                             />
                         </a-col>
                     </a-row>
-                </a-form-item>
                 <a-form-item name="brands">
                     <a-checkbox-group v-model:value="formState.brands" :options="brandsOptions" />
                 </a-form-item>

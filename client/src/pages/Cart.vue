@@ -1,39 +1,14 @@
 
 <script setup>
-    import { computed, ref } from 'vue'
+    import { computed } from 'vue'
     import { useStore } from 'vuex'
-    import CartList from '../components/CartList.vue'
-    import { message } from 'ant-design-vue';
+    import CartList from '../container/CartList.vue'
+    import CartComment from '../components/CartComment.vue';
 
     const store = useStore()
 
-    const formState = ref({
-        comment: '',
-    });
-
-    const userId = computed(() => store.getters['auth/getUserId'])
     const cartCount = computed(() => store.getters[`cart/cartCount`])
     const totalPrice = computed(() => store.getters['cart/totalPrice'])
-    const cartIds = computed(() => store.getters['cart/cartIds'])
-    const productIds = computed(() => store.getters['cart/productIds'])
-
-    const onFinish = (values) => {
-        const params = {
-            comment: values.comment,
-            userId: userId.value,
-            productIds: productIds.value.join(',')
-        }
-
-        store.dispatch('order/createOrder', params)
-            .then(() => store.dispatch('order/fetchOrders', userId.value))
-            .then(() => {
-                store.dispatch('cart/deleteProducts', { userId: userId.value, ids: cartIds.value })
-
-                formState.value.comment = ''
-                message.success('Заказ создан')
-            })
-            .catch((e) => console.log(e))
-    };
 </script>
 
 <template>
@@ -44,16 +19,7 @@
         <div class="list_container">
             <CartList />
         </div>
-        <a-form :model="formState" name="order" @finish="onFinish" style="margin-top: 20px;">
-            <a-form-item name="comment">
-                <a-textarea v-model:value="formState.comment" placeholder="ваш комментарий к заказу" allow-clear :maxlength="300" />
-            </a-form-item>
-            <a-form-item>
-                <a-button type="primary" html-type="submit" class="button_container" :disabled="!totalPrice">
-                    Оформить заказ
-                </a-button>
-            </a-form-item>
-        </a-form>
+        <CartComment />
     </div>
 </template>
 
@@ -77,15 +43,4 @@
         min-height: 250px;
         overflow-y: auto;
     }
-
-    .button_container {
-        background-color: #F14F4F;
-        width: 200px;
-    }
-
-    .button_container:hover {
-        background-color: #F14F4F;
-        opacity: 0.6;
-    }
-
 </style>

@@ -2,14 +2,14 @@
     import useGridColumns from '../hooks/useGridColumns'
     import useProductList from '../hooks/useProductList'
 
-    import Card from './Card.vue'
+    import Card from '../components/Card.vue'
 
     const { filters } = defineProps({
         filters: Object,
     })
 
-    const { loadMore, rows, count, length, loading, onClickByCard } = useProductList(filters)
-    const { columns } = useGridColumns(length)
+    const { loadMore, rows, count, loading, onClickByCard } = useProductList(filters)
+    const { columns } = useGridColumns()
   
 </script>
 
@@ -26,11 +26,11 @@
         </a-list-item>
       </template>
     </a-list>
-    <div v-if="count === length" class="product-list_all_container"> 
+    <div v-if="count === rows?.length" class="product-list_all_container"> 
       Вы посмотрели весь список
     </div>
     <a-button 
-      v-if="count !== length" 
+      v-if="count !== rows?.length" 
       type="primary" 
       class="product-list_button_container" 
       @click="loadMore">

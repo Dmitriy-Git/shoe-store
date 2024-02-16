@@ -5,7 +5,7 @@
     import { CloseCircleOutlined } from '@ant-design/icons-vue';
     import { message } from 'ant-design-vue';
 
-    const props = defineProps({ productId: String })
+    const props = defineProps({ productId: Number })
 
     const store = useStore()
 
@@ -16,10 +16,11 @@
 
     watch(() => props.productId, (newValue) => {
         getProductRatingForUser({ productId: newValue, userId: userId.value })
-            .then(({ data }) => {
+            .then(({ data = 0 }) => {
                 if (data) {
                     isRate.value = true
-                    value.value = data
+
+                    value.value = Number(data)
                 }
             })
     })

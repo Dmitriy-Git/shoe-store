@@ -1,7 +1,7 @@
 <script setup>
     import { computed } from 'vue'
     import { useStore } from 'vuex'
-    import CartItem from './CartItem.vue'
+    import CartItem from '../components/CartItem.vue'
     import EmptyList from '../assets/empty_list.svg'
 
     const store = useStore()

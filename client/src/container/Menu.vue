@@ -5,7 +5,7 @@
     import { useStore } from 'vuex'
     import { UserOutlined } from '@ant-design/icons-vue';
     import CartBadge from './CartBadge.vue'
-    import OrderBadge from './OrderBadge.vue';
+    import OrderBadge from '../components/OrderBadge.vue';
 
     const router = useRouter()
     const route = useRoute()

@@ -1,27 +1,22 @@
 <script setup>
-  import { reactive, computed } from 'vue';
-  import { useStore } from 'vuex'
-  import { useRouter } from 'vue-router'
+    import { reactive, computed } from 'vue';
+    import { useStore } from 'vuex'
+    import { useRouter } from 'vue-router'
 
-  const formState = reactive({
-    username: '',
-    password: '',
-  });
+    const formState = reactive({
+        username: '',
+        password: '',
+    });
 
-  const store = useStore()
-  const router = useRouter()
+    const store = useStore()
+    const router = useRouter()
 
-  const error = computed(() => store.getters[`auth/getError`])
+    const error = computed(() => store.getters[`auth/getError`])
 
-  const linkToRegistration = () => {
-    router.push({ path: '/registration' })
-    store.commit('auth/setError', null)
-  }
-
-  const onFinish = (values) => {
-    store.dispatch('auth/login', values)
-      .then(() => { router.push({ path: '/' }) })
-  };
+    const onFinish = (values) => {
+        store.dispatch('auth/registration', values)
+            .then(() => { router.push({ path: '/' }) })
+    };
 </script>
 
 <template>
@@ -50,18 +45,15 @@
         >
           <a-input-password v-model:value="formState.password" />
         </a-form-item>
-        <template v-if="error">
-          <div class="error_container">
+
+        <div v-if="error" class="error_container">
             <span style="color: #ff4d4f;">
               {{ error }}
             </span>
-          </div>
-          <span class="registration_link" @click="linkToRegistration">
-              Зарегистрироваться
-          </span>
-        </template>
+        </div>
+
         <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-          <a-button class="button_container" type="primary" html-type="submit">Войти</a-button>
+          <a-button class="button_container" type="primary" html-type="submit">Зарегистрироваться</a-button>
         </a-form-item>
       </a-form>
     </div>
@@ -91,16 +83,5 @@
       display: flex; 
       justify-content: center; 
       margin-bottom: 24px;
-    }
-
-    .registration_link {
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 24px;
-    }
-
-    .registration_link:hover {
-      color: #3333ff;
-    }
+    }       
 </style>

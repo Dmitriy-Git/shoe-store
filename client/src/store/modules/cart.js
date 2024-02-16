@@ -9,6 +9,9 @@ const getters = {
     cartProducts: (state) => {
         return state.productCart?.length ? state.productCart : null
     },
+    cartSizes: (state) => {
+        return state.productCart?.length ? state.productCart.reduce((acc, i) => [...acc, i.size], []) : []
+    },
     cartIds: (state) => {
         return state.productCart?.map((product) => product.id)
     },

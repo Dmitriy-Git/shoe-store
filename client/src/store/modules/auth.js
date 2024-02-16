@@ -31,6 +31,7 @@ const actions = {
             .then(({ data }) => { 
                 localStorage.setItem('token', data.token);
                 commit('setUser', data.user)
+                commit('setError', null)
                 resolve(data.user)
              })
             .catch(e => {
@@ -43,13 +44,20 @@ const actions = {
     registration ({ commit }, params) {
         commit('setLoadingAuth', true)
 
-        registrationApi(params)
-            .then(({ data }) => { 
-                localStorage.setItem('token', data.token);
-                commit('setUser', data.user) 
-            })
-            .catch(e => commit('setError', e))
-            .finally(() => commit('setLoadingAuth', false))
+        return new Promise((resolve, reject) => {
+            registrationApi(params)
+                .then(({ data }) => { 
+                    localStorage.setItem('token', data.token);
+                    commit('setUser', data.user) 
+                    commit('setError', null)
+                    resolve(data.user)
+                })
+                .catch(e => {
+                    commit('setError', e.response.data.error)
+                    reject(e)
+                })
+                .finally(() => commit('setLoadingAuth', false))
+        })
 
     },
     check ({ commit }) {

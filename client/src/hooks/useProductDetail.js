@@ -16,7 +16,7 @@ export default function useProductDetail() {
         try {
             const { data } = await getProductDetail(id)
 
-            dataSource.value = data
+            dataSource.value = { ...data, ratings: Number(data.ratings || 0) }
         } catch(e) {
             console.log(e)
         }

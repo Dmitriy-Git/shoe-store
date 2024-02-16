@@ -56,6 +56,7 @@ const OrderList = sequelize.define('oderList', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     productId: { type: DataTypes.INTEGER, allowNull: false, },
     orderId: { type: DataTypes.INTEGER, allowNull: false, },
+    size: { type: DataTypes.INTEGER, allowNull: false, }
 })
 
 const Rating = sequelize.define('rating', {

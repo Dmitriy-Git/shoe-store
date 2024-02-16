@@ -1,7 +1,7 @@
 <script setup>
     import { reactive } from 'vue' 
-    import ProductList from '../components/ProductList.vue'
-    import ProductFilters from '../components/ProductFilters.vue'
+    import ProductList from '../container/ProductList.vue'
+    import ProductFilters from '../container/ProductFilters.vue'
 
     const filters = reactive({
         rangePrice: null,

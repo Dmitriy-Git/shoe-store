@@ -6,7 +6,8 @@ import Login from './pages/Login.vue'
 import Order from './pages/ Order.vue'
 import Contact from './pages/Contact.vue' 
 import Profile from './pages/Profile.vue'
-import ProductDetailPopup from './components/ProductDetailPopup.vue'
+import Registration from './pages/Registration.vue'
+import ProductDetailPopup from './container/ProductDetailPopup.vue'
 
 const routes = [
     {   
@@ -46,6 +47,11 @@ const routes = [
         path: '/order',
         name: 'Order',
         component: Order,
+    },
+    {
+        path: '/registration',
+        name: 'Registration',
+        component: Registration,
     }
 ]
 
@@ -55,6 +61,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => { 
+    if (from.name === 'Registration' || to.name === 'Registration') next()
+
+    
     if (!localStorage.getItem('token') && to.name !== 'Login') next({ name: 'Login' }) 
     else next()
 })
